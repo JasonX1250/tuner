@@ -30,8 +30,3 @@
     position: absolute;
     top: 0;
 }
-
-#main {
-    transition: margin-left .5s;
-    text-align: center;
-}
