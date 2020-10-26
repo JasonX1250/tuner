@@ -6,7 +6,7 @@ Application: Tuner
 ## Team Overview
 
 Jason Xiao @JasonX1250  
-Alex Lapin  
+Alex Lapin  @alleopp
 Yaocao Chen @Yaocao  
 
 ## Innovative Idea
