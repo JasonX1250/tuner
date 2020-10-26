@@ -12,11 +12,6 @@ body {
     font-size: 25px;
 }
 
-#title {
-    width: 80%;
-    text-align: center;
-}
-
 .container {
     width: 100%;
     margin: auto;

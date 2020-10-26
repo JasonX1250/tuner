@@ -49,3 +49,7 @@
 #main {
     transition: margin-left .5s;
 }
+
+#title {
+    color: black;
+}
