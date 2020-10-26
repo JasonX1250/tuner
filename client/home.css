@@ -34,7 +34,6 @@ h2 {
     font-size: 30px;
 }
 
-#main {
-    transition: margin-left .5s;
+#center {
     text-align: center;
 }
