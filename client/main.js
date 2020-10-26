@@ -1,8 +1,10 @@
 const availablePlatforms = ["Spotify", "YouTube"];
 let startPlatform = "";
+let endPlatform = "";
 
 window.onload = () => {
     loadMenu();
+    loadPlatforms();
 };
 
 function loadMenu() {
@@ -18,4 +20,27 @@ function loadMenu() {
 
 function setStartPlatform(platform) {
     startPlatform = platform;
+    window.localStorage.setItem("startPlatform", startPlatform);
+}
+
+function setEndPlatform(platform) {
+    endPlatform = platform;
+    window.localStorage.setItem("endPlatform", endPlatform);
+}
+
+function loadPlatforms() {
+    const storedStartPlatform = window.localStorage.getItem("startPlatform");
+    if (storedStartPlatform !== null) {
+        startPlatform = storedStartPlatform;
+    }
+    const storedEndPlatform = window.localStorage.getItem("endPlatform");
+    if (storedEndPlatform !== null) {
+        endPlatform = storedEndPlatform;
+    }
+}
+
+function reset() {
+    startPlatform = "";
+    endPlatform = "";
+    window.localStorage.clear();
 }
