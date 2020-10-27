@@ -11,7 +11,7 @@ function addEndPlatformLogo() {
     const endPlatformLogo = document.getElementById("end-platform-logo");
     const logo = document.createElement("img");
     logo.id="end-platform-icon";
-    logo.src = `../Logos/${startPlatform}.jpg`;
+    logo.src = `../Logos/${endPlatforms[0]}.jpg`;
     endPlatformLogo.appendChild(logo);
     const text = document.createElement("div");
     text.id = "end-platform-name";
