@@ -26,6 +26,8 @@ After selecting a platform to get their video, song, playlist, album, etc. from,
 
 ![YouTube Query](Wireframes/UI-YouTubeQuery.png)
 
+![Screenshot for Youtube Query](Wireframs/screenshot-youtube-query.png)
+
 The application will return a list of possible matches for the media the user want to use. They can select one from the list to proceed.
 
 ![YouTube Results](Wireframes/UI-YoutubeResults.png)
