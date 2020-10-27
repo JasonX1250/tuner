@@ -1,21 +1,18 @@
 window.onload = async () => {
     await loadMenu();
     await loadPlatforms();
-    await loadMediaToConvert();
-    addStartPlatformLogo();
+    await searchinfo();
 }
 
-const startPlatformLogo = document.getElementById("start-platform-logo");
+document.getElementById("search").addEventListener("click",searchinfo);
 
-function addStartPlatformLogo() {
-    console.log(startPlatformLogo);
-    const logo = document.createElement("img");
-    logo.id="start-platform-icon";
-    logo.src = `../Logos/${startPlatform}.jpg`;
-    startPlatformLogo.appendChild(logo);
-    const text = document.createElement("div");
-    text.id = "start-platform-name";
-    text.appendChild(document.createTextNode(`${startPlatform}`));
-    startPlatformLogo.appendChild(text);
+function searchinfo() {
+    const link = document.getElementById("link").value;
+    const type = document.getElementById("qType").value;  
+    const content = document.getElementById("qTitle").value;
+    const channel = document.getElementById("link-channel").value;
+    return link,type,content,channel;
 }
+
+
 
