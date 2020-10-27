@@ -1,0 +1,42 @@
+h2 {
+    text-align: center;
+}
+
+#platform-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.platform-name {
+    font-size: 30px;
+}
+
+#buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5%;
+}
+
+#container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#success {
+    font-size: 200px;
+    text-align: center;
+    margin-bottom: 5%;
+}
+
+.success-text {
+    font-size: 100px;
+}
+
+.failure-text {
+    margin-left: 15%;
+    margin-right: 15%;
+    font-size: 50px;
+}
