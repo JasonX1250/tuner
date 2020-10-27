@@ -1,0 +1,31 @@
+#start-platform-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#start-platform-name {
+    font-size: 30px;
+}
+
+#search-results {
+    height: 450px;
+    overflow-y: auto;
+}
+
+.result {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+
+.media-title {
+    font-size: large;
+}
+
+#buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
