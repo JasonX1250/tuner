@@ -7,7 +7,6 @@ window.onload = async () => {
     
     // add event listener to continue button
     document.getElementById("add-to-playlists-btn").addEventListener("click", finalizeSelection);
-
 }
 
 const platformLogos = document.getElementById("platform-logos");
@@ -32,11 +31,11 @@ function addPlatformLogos() {
         platformLogos.appendChild(startPlatformText);
         const endPlatformImg = document.createElement("img");
         endPlatformImg.id="end-platform-icon";
-        endPlatformImg.src = `../Logos/${endPlatform}.jpg`;
+        endPlatformImg.src = `../Logos/${endPlatforms[0]}.jpg`;
         platformLogos.appendChild(endPlatformImg);
         const endPlatformText = document.createElement("div");
         endPlatformText.classList.add("platform-name");
-        endPlatformText.appendChild(document.createTextNode(`${endPlatform}`));
+        endPlatformText.appendChild(document.createTextNode(`${endPlatforms[0]}`));
         platformLogos.appendChild(endPlatformText);
     }
 }
@@ -83,7 +82,6 @@ function addConvertedResults() {
         selectBtn.addEventListener("click", () => { selectMedia(selectBtn, media); });
         selectBtnDiv.appendChild(selectBtn);
         result.appendChild(selectBtnDiv);
-        console.log(result.outerHTML);
         // add each result to the search-results container
         convertedResults.appendChild(result);
     }
