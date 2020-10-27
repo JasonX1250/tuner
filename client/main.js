@@ -3,6 +3,7 @@ let startPlatform = "";
 let endPlatforms = [];
 let mediaToConvert = [];
 let convertedMedia = [];
+let selectedConvertedMedia = [];
 
 window.onload = () => {
     loadMenu();
