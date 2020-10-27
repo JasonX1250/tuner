@@ -36,7 +36,7 @@ function loadPlatforms() {
         startPlatform = storedStartPlatform;
     }
     const storedEndPlatforms = window.localStorage.getItem("endPlatforms");
-    if (storedEndPlatform !== null) {
+    if (storedEndPlatforms !== null) {
         endPlatforms = JSON.parse(storedEndPlatform);
     }
 }
