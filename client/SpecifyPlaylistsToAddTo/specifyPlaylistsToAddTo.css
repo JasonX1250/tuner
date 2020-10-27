@@ -1,0 +1,15 @@
+#end-platform-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#end-platform-name {
+    font-size: 30px;
+}
+
+#buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
