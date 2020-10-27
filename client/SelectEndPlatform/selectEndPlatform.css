@@ -1,0 +1,39 @@
+h2 {
+    text-align: center;
+}
+
+#start-platform-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#start-platform-name {
+    font-size: 30px;
+}
+
+#buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#end-platforms button {
+    width: 50%;
+    margin-left: 25%;
+}
+
+.not-selected-platform {
+    background-color: #b19cd9 !important;
+}
+
+.selected-platform {
+    background-color: #6a5acd !important;
+}
+
