@@ -1,0 +1,46 @@
+h2 {
+    text-align: center;
+}
+
+#platform-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.platform-name {
+    font-size: 30px;
+}
+
+#buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#playlists-found {
+    height: 500px;
+    overflow-y: auto;
+}
+
+.result {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+
+.btn-danger, .selected {
+    width: 100px;
+}
+
+.selected {
+    color: white;
+    background-color: #5cb85c !important; 
+}
