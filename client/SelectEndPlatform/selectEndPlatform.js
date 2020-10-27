@@ -3,6 +3,9 @@ window.onload = async () => {
     await loadPlatforms();
     addStartPlatformLogo();
     addAvailableEndPlatforms();
+
+    // add button event listeners
+    document.getElementById("continue").addEventListener("click", finalizeSelection);
 }
 
 const startPlatformLogo = document.getElementById("start-platform-logo");
@@ -48,5 +51,14 @@ function selectPlatform(platform) {
         endPlatforms.push(platform);
         platformBtn.classList.add("selected-platform");
         platformBtn.classList.remove("not-selected-platform");
+    }
+}
+
+function finalizeSelection() {
+    if (endPlatforms.length >= 1) {
+        window.localStorage.setItem("endPlatforms", JSON.stringify(endPlatforms));
+        // render next page
+    } else {
+        window.alert("You must select at least one of the listed platforms.")
     }
 }
