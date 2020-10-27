@@ -1,5 +1,6 @@
 window.onload = async () => {
     await loadPlatforms();
+    await loadMenu();
     addStartPlatformLogo();
     applyPlatformSpecifics();
 
