@@ -73,3 +73,7 @@ Afterwards, the application will notify the user whether the selected pieces of 
 - *Start Platform Query* page (html, css, js)
 
 ### Alex
+
+- *Start Platform Query page (html)
+- Content responsiveness fix with the sidebar transition(html,css,js)
+- Success message page(html,css,js)
