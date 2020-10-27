@@ -4,6 +4,8 @@ let endPlatforms = [];
 let mediaToConvert = [];
 let convertedMedia = [];
 let selectedConvertedMedia = [];
+let playlistsFound = [];
+let playlistsToAddTo = [];
 
 window.onload = () => {
     loadMenu();
