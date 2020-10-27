@@ -66,6 +66,7 @@ Afterwards, the application will notify the user whether the selected pieces of 
 - *Result of Adding Converted Media to Playlists* page (html, css, js)
 - *Specifying Which Playlists To Add Media To* page (html, css, js)
 - *Selecting Which Playlists Found To Add Media To* page (html, css, js)
+- UI screenshots
 
 ### Yaocao
 
