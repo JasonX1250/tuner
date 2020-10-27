@@ -37,7 +37,7 @@ function loadPlatforms() {
     }
     const storedEndPlatforms = window.localStorage.getItem("endPlatforms");
     if (storedEndPlatforms !== null) {
-        endPlatforms = JSON.parse(storedEndPlatform);
+        endPlatforms = JSON.parse(storedEndPlatforms);
     }
 }
 
