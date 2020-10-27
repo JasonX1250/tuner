@@ -61,9 +61,16 @@ Afterwards, the application will notify the user whether the selected pieces of 
 
 - Milestone 1 writeup
 - Wireframes mockups
+- *Home* page (html, css, js)
+- *Start Platform Query Results* page (html, css, js)
+- *Select End Platform* page (html, css, js)
+- *Select Converted Media To Add To Playlists* page (html, css, js)
+- *Result of Adding Converted Media to Playlists* page (html, css, js)
+- *Specifying Which Playlists To Add Media To* page (html, css, js)
+- *Selecting Which Playlists Found To Add Media To* page (html, css, js)
 
 ### Yaocao
--implement Wireframes 2
 
+- *Start Platform Query* page (html, css, js)
 
 ### Alex
