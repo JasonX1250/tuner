@@ -2,6 +2,7 @@ const availablePlatforms = ["Spotify", "YouTube"];
 let startPlatform = "";
 let endPlatforms = [];
 let mediaToConvert = [];
+let convertedMedia = [];
 
 window.onload = () => {
     loadMenu();
@@ -34,9 +35,9 @@ function loadPlatforms() {
     if (storedStartPlatform !== null) {
         startPlatform = storedStartPlatform;
     }
-    const storedEndPlatform = window.localStorage.getItem("endPlatform");
+    const storedEndPlatforms = window.localStorage.getItem("endPlatforms");
     if (storedEndPlatform !== null) {
-        endPlatform = storedEndPlatform;
+        endPlatforms = JSON.parse(storedEndPlatform);
     }
 }
 
@@ -49,7 +50,7 @@ function loadMediaToConvert() {
 
 function reset() {
     startPlatform = "";
-    endPlatform = "";
+    endPlatforms = [];
     mediaToConvert = [];
     window.localStorage.clear();
 }
