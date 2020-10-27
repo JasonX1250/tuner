@@ -1,6 +1,6 @@
 const availablePlatforms = ["Spotify", "YouTube"];
 let startPlatform = "";
-let endPlatform = "";
+let endPlatforms = [];
 let mediaToConvert = [];
 
 window.onload = () => {
@@ -24,11 +24,6 @@ function setStartPlatform(platform) {
     window.localStorage.setItem("startPlatform", startPlatform);
 }
 
-function setEndPlatform(platform) {
-    endPlatform = platform;
-    window.localStorage.setItem("endPlatform", endPlatform);
-}
-
 function setMediaToConvert(media) {
     mediaToConvert = media;
     window.localStorage.setItem("mediaToConvert", JSON.stringify(mediaToConvert));
@@ -46,7 +41,6 @@ function loadPlatforms() {
 }
 
 function loadMediaToConvert() {
-    console.log(window.localStorage.getItem("mediaToConvert"));
     const storedMediaToConvert = JSON.parse(window.localStorage.getItem("mediaToConvert"));
     if (storedMediaToConvert !== null) {
         mediaToConvert = storedMediaToConvert;

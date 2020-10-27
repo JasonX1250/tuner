@@ -10,7 +10,6 @@ const startPlatformLogo = document.getElementById("start-platform-logo");
 const searchResults = document.getElementById("search-results");
 
 function addStartPlatformLogo() {
-    console.log(startPlatformLogo);
     const logo = document.createElement("img");
     logo.id="start-platform-icon";
     logo.src = `../Logos/${startPlatform}.jpg`;
