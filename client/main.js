@@ -7,16 +7,22 @@ let selectedConvertedMedia = [];
 let playlistsFound = [];
 let playlistsToAddTo = [];
 
-window.onload = () => {
-    loadMenu();
-    loadPlatforms();
-};
-
 function loadMenu() {
     const menu = document.getElementById("menu");
     for (const platform of availablePlatforms) {
         const tab = document.createElement("a");
-        tab.href = "startPlatformQuery.html";
+        tab.href = "../StartPlatformQuery/startPlatformQuery.html";
+        tab.onclick = setStartPlatform(platform);
+        tab.appendChild(document.createTextNode(`${platform}`));
+        menu.appendChild(tab);
+    }
+}
+
+function loadMenuFromHome() {
+    const menu = document.getElementById("menu");
+    for (const platform of availablePlatforms) {
+        const tab = document.createElement("a");
+        tab.href = "StartPlatformQuery/startPlatformQuery.html";
         tab.onclick = setStartPlatform(platform);
         tab.appendChild(document.createTextNode(`${platform}`));
         menu.appendChild(tab);
