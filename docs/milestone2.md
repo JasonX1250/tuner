@@ -65,7 +65,7 @@ Returns a list of media found on the target platform matching the given input me
   - *duration* - String specifying the duration of the media
 
 > ***newPlaylist***  
-Creates a new playlist on the specified platform
+Creates a new playlist on the specified platform and returns the link associated with it
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
@@ -79,7 +79,7 @@ Creates a new playlist on the specified platform
   - *private* - Boolean specifying whether the new playlist will be private ( *true* ) or public ( *false* )
 
 > ***addToPlaylists***  
-Adds the specified media to the target playlists
+Adds the specified media to the target playlists and returns a list of Strings (*success* or *failure*) indicating the status of adding media to each playlist
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
@@ -89,7 +89,7 @@ Adds the specified media to the target playlists
 | playlists | Array[String] | List of links to playlists to add the media to |
 
 > ***savePlaylist***  
-Saves the collection of converted media to user's account
+Saves the collection of converted media to user's account and returns a string representing the Id of the saved playlist (-1 if failed to saved playlist)
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
@@ -113,13 +113,15 @@ Deletes the specified playlist from the user's collection of saved playlists
 |-----------|------|-------------|
 | userId | String | Id used to specify the user |
 | auth | String | Authetication for verifying the user |
-| playlistID | String | ID of the playlist to delete |
+| playlistId | String | Id of the playlist to delete |
 
 ## Division of Labor
 
 ### Jason
 
 - API Overview
+- Backend Skeleton Code
+  - server/index.js
 
 ### Yaocao
 
