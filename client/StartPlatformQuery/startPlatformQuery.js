@@ -67,6 +67,6 @@ async function query() {
     if (response.ok) {
         const data = await response.json();
         setMediaToConvert(data);
-        window.location.replace(`${url}/startQueryResults`);
+        window.location.href = `${url}/startQueryResults`;
     }
 }

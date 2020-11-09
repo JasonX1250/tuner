@@ -5,33 +5,60 @@ window.onload = async () => {
 
     // add event listener to 'Continue' button
     document.getElementById("continue-btn").addEventListener("click", specifyPlaylists);
+    document.getElementById("go-back-btn").addEventListener("click", () => {
+        window.location.href = `${url}/convertedMedia`;
+    });
 }
 
 function addEndPlatformLogo() {
     const endPlatformLogo = document.getElementById("end-platform-logo");
     const logo = document.createElement("img");
-    logo.id="end-platform-icon";
+    logo.id = "end-platform-icon";
     logo.src = `../Logos/${endPlatforms[0]}.jpg`;
     endPlatformLogo.appendChild(logo);
     const text = document.createElement("div");
     text.id = "end-platform-name";
-    text.appendChild(document.createTextNode(`${startPlatform}`));
+    text.appendChild(document.createTextNode(`${endPlatforms[0]}`));
     endPlatformLogo.appendChild(text);
 }
 
-function specifyPlaylists() {
-    let specification = "find";
-    let query = { "specification": specification};
-    if (document.getElementById("link-existing-playlists").checked) {
-        specification = "link";
-        query["link"] = document.getElementById("existing-playlist-link").value;
-    } else if (document.getElementById("add-new-playlist").checked) {
-        specification = "new";
-        query["title"] = document.getElementById("new-playlist-title").value;
-        if (document.getElementById("privacy-public").checked) {
-            query["privacy"] = "public";
-        } else {
-            query["privacy"] = "private";
+async function specifyPlaylists() {
+    if (document.getElementById("add-new-playlist").checked) {
+        const response = await fetch(`${url}/newPlaylist`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json;charset=utf-8"
+            },
+            body: JSON.stringify({
+                userId: "exampleUserId",
+                auth: "exampleAuth",
+                platform: endPlatforms[0],
+                details: {
+                    title: document.getElementById("new-playlist-title").value,
+                    private: document.getElementById("privacy-private").checked
+                }
+            })
+        });
+        if (response.ok) {
+            const data = await response.json();
+            playlistsFound = data;
+            window.localStorage.setItem("playlistsFound", JSON.stringify(playlistsFound));
+            window.location.href = `${url}/addToPlaylists`;
+        }
+    } else {
+        let query = `platform=${endPlatforms[0]}`;
+        if (document.getElementById("find-existing-playlists").checked) {
+            query += "&queryMethod=find";
+        } else if (document.getElementById("link-existing-playlists").checked) {
+            query += "&queryMethod=link";
+            query += `&link=${document.getElementById("existing-playlist-link").value}`;
+        }
+        const response = await fetch(`${url}/queryPlaylists?${query}`);
+        if (response.ok) {
+            const data = await response.json();
+            playlistsFound = data;
+            window.localStorage.setItem("playlistsFound", JSON.stringify(playlistsFound));
+            window.location.href = `${url}/addToPlaylists`;
         }
     }
 }

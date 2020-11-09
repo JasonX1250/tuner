@@ -26,7 +26,7 @@ app.use("/selectEndPlatform", express.static(path.join(__dirname, "../client/Sel
 app.use("/convertedMedia", express.static(path.join(__dirname, "../client/EndPlatformConvertedResults")));
 app.use("/playlistQuery", express.static(path.join(__dirname, "../client/SpecifyPlaylistsToAddTo")));
 app.use("/addToPlaylists", express.static(path.join(__dirname, "../client/SelectPlaylistsToAddTo")));
-app.use("/addToPlaylistsResult", express.static(path.join(__dirname, "../client/AddToPlaylistResult")));
+app.use("/addToPlaylistsResults", express.static(path.join(__dirname, "../client/AddToPlaylistResult")));
 
 app.get("/queryMedia", (req, res) => {
     const platform = req.query.platform;
@@ -37,7 +37,7 @@ app.get("/queryMedia", (req, res) => {
 
 app.get("/queryPlaylists", (req, res) => {
     const platform = req.query.platform;
-    const queryMethod = req.queury.queryMethod;
+    const queryMethod = req.query.queryMethod;
     console.log(req.query);
     res.send(exampleData);
 });
@@ -49,44 +49,44 @@ app.get("/getSavedPlaylists", (req, res) => {
 });
 
 app.post("/convertMedia", (req, res) => {
-    const platform = req.query.platform;
-    const mediaToConvert = req.query.media;
-    console.log(req.query);
+    const platform = req.body.platform;
+    const mediaToConvert = req.body.media;
+    console.log(req.body);
     res.send(exampleData);
 });
 
 app.post("/newPlaylist", (req, res) => {
-    const userId = req.query.userId;
-    const auth = req.query.auth;
-    const platform = req.query.platform;
-    const playlistDetails = req.query.details;
-    console.log(req.query);
-    res.send("SomeRandomLink.com/playlist/abc123");
+    const userId = req.body.userId;
+    const auth = req.body.auth;
+    const platform = req.body.platform;
+    const playlistDetails = JSON.parse(req.body.details);
+    console.log(req.body);
+    res.send(exampleData);
 });
 
 app.post("/addToPlaylists", (req, res) => {
-    const userId = req.query.userId;
-    const auth = req.query.auth;
-    const media = req.query.media;
-    const playlists = req.query.playlists;
-    console.log(req.query);
+    const userId = req.body.userId;
+    const auth = req.body.auth;
+    const media = req.body.media;
+    const playlists = req.body.playlists;
+    console.log(req.body);
     res.send(["success", "success", "success", "success"]);
 });
 
 app.post("/savePlaylist", (req, res) => {
-    const userId = req.query.userId;
-    const auth = req.query.auth;
-    const title = req.query.title;
-    const media = req.query.media;
-    console.log(req.query);
+    const userId = req.body.userId;
+    const auth = req.body.auth;
+    const title = req.body.title;
+    const media = req.body.media;
+    console.log(req.body);
     res.send("examplePlaylistId");
 });
 
 app.delete("/deleteSavedPlaylist", (req, res) => {
-    const userId = req.query.userId;
-    const auth = req.query.auth;
-    const playlistId = req.query.playlistId;
-    console.log(req.query);
+    const userId = req.body.userId;
+    const auth = req.body.auth;
+    const playlistId = req.body.playlistId;
+    console.log(req.body);
     res.send("success");
 });
 

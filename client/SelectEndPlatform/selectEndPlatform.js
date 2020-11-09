@@ -5,11 +5,13 @@ window.onload = async () => {
     addAvailableEndPlatforms();
 
     // add button event listeners
-    document.getElementById("continue").addEventListener("click", finalizeSelection);
+    document.getElementById("continue-btn").addEventListener("click", finalizeSelection);
+    document.getElementById("go-back-btn").addEventListener("click", () => { window.location.href = `${url}/startQueryResults` });
 }
 
 const startPlatformLogo = document.getElementById("start-platform-logo");
 const availableEndPlatforms = document.getElementById("end-platforms");
+endPlatforms = [];
 
 function addStartPlatformLogo() {
     const logo = document.createElement("img");
@@ -54,10 +56,25 @@ function selectPlatform(platform) {
     }
 }
 
-function finalizeSelection() {
+async function finalizeSelection() {
     if (endPlatforms.length >= 1) {
         window.localStorage.setItem("endPlatforms", JSON.stringify(endPlatforms));
-        // render next page
+        const response = await fetch(`${url}/convertMedia`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json;charset=utf-8"
+            },
+            body: JSON.stringify({
+                platform: startPlatform,
+                media: mediaToConvert
+            })
+        });
+        if (response.ok) {
+            const data = await response.json();
+            convertedMedia = data;
+            window.localStorage.setItem("convertedMedia", JSON.stringify(convertedMedia));
+            window.location.href =`${url}/convertedMedia`;
+        }
     } else {
         window.alert("You must select at least one of the listed platforms.")
     }

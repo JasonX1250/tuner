@@ -7,6 +7,7 @@ window.onload = async () => {
     
     // add event listener to continue button
     document.getElementById("add-to-playlists-btn").addEventListener("click", finalizeSelection);
+    document.getElementById("go-back-btn").addEventListener("click", () => { window.location.href = `${url}/playlistQuery`; });
 }
 
 const platformLogos = document.getElementById("platform-logos");
@@ -107,10 +108,27 @@ function selectMedia(selectBtn, media) {
     }
 }
 
-function finalizeSelection() {
+async function finalizeSelection() {
     if (playlistsToAddTo.length >= 1) {
         window.localStorage.setItem("playlistsToAddTo", JSON.stringify(playlistsToAddTo));
-        // render next page
+        const response = await fetch(`${url}/addToPlaylists`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json;charset=utf-8"
+            },
+            body: JSON.stringify({
+                userId: "exampleUserId",
+                auth: "exampleAuth",
+                platform: endPlatforms[0],
+                media: mediaToConvert,
+                playlists: playlistsToAddTo
+            })
+        });
+        if (response.ok) {
+            const data = await response.json();
+            window.localStorage.setItem("playlistsAddedTo", JSON.stringify(data));
+            window.location.href = `${url}/addToPlaylistsResults`;
+        }
     } else {
         window.alert("You must select at least one piece of media to add to playlists.")
     }

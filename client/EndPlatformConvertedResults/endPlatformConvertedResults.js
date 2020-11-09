@@ -7,6 +7,7 @@ window.onload = async () => {
     
     // add event listener to continue button
     document.getElementById("add-to-playlists-btn").addEventListener("click", finalizeSelection);
+    document.getElementById("go-back-btn").addEventListener("click", () => { window.location.href = `${url}/selectEndPlatform`; });
 }
 
 const platformLogos = document.getElementById("platform-logos");
@@ -110,7 +111,7 @@ function selectMedia(selectBtn, media) {
 function finalizeSelection() {
     if (selectedConvertedMedia.length >= 1) {
         window.localStorage.setItem("selectedConvertedMedia", JSON.stringify(selectedConvertedMedia));
-        // render next page
+        window.location.href = `${url}/playlistQuery`;
     } else {
         window.alert("You must select at least one piece of media to add to playlists.")
     }

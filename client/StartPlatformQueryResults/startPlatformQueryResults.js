@@ -4,6 +4,8 @@ window.onload = async () => {
     await loadMediaToConvert();
     addStartPlatformLogo();
     addSearchResults();
+
+    document.getElementById("go-back-btn").addEventListener("click", () => { window.location.href = `${url}/startQuery`; });
 }
 
 const startPlatformLogo = document.getElementById("start-platform-logo");
@@ -69,5 +71,5 @@ function addSearchResults() {
 
 function selectMedia(media) {
     mediaToConvert = [media];
-    window.location.replace(`${url}/selectEndPlatform`);
+    window.location.href = `${url}/selectEndPlatform`;
 }

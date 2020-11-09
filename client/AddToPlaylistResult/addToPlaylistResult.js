@@ -3,10 +3,19 @@ window.onload = async () => {
     await loadPlatforms();
     addPlatformLogos();
     showSuccess();
+
+    document.getElementById("convert-more-btn").addEventListener("click", () => { window.location.href = `${url}/startQuery`; });
+    document.getElementById("go-back-btn").addEventListener("click", () => { window.location.href = `${url}/addToPlaylists`; });
 }
 
 const platformLogos = document.getElementById("platform-logos");
 let addedToPlaylistsSuccess = false;
+const playlistsAddedTo = JSON.parse(window.localStorage.getItem("playlistsAddedTo"));
+if (playlistsAddedTo.length > 0 && playlistsAddedTo.includes("success")) {
+    addedToPlaylistsSuccess = true;
+} else {
+    addedToPlaylistsSuccess = false;
+}
 
 function addPlatformLogos() {
     for (const endPlatform of endPlatforms) {
@@ -37,6 +46,17 @@ function showSuccess() {
         text.appendChild(document.createTextNode("Done"));
         text.classList.add("success-text");
         success.appendChild(text);
+        let playlistsAdded = "";
+        const playlists = JSON.parse(window.localStorage.getItem("playlistsToAddTo"));
+        for (let i = 0; i < playlistsAddedTo.length; i++) {
+            if (playlistsAddedTo[i] === "success") {
+                playlistsAdded += `${playlists[i].title}`;
+                if (i < playlistsAddedTo.length - 1) {
+                    playlistsAdded += ", ";
+                }
+            }
+        }
+        document.getElementById("description").appendChild(document.createTextNode(playlistsAdded));
     } else {
         success.appendChild(document.createTextNode("\u2717 "));
         const text1 = document.createElement("div");
