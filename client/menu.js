@@ -22,16 +22,25 @@ function loadMenu() {
 }
 
 function loadLogin() {
-    const auth = window.localStorage.getItem("auth");
+    const auth = window.localStorage.getItem("authToken");
     // check auth with fetch, add && to if
     const login = document.getElementById("login");
     while (login.hasChildNodes()) {
         login.removeChild(login.firstChild);
     }
-    if (auth != null) {
+    if (auth !== null && auth !== "") {
+        const menu = document.getElementById("menu");
+        const tab = document.createElement("a");
+        tab.href = "/savedPlaylists";
+        tab.appendChild(document.createTextNode("Saved Playlists"));
+        menu.prepend(tab);
+
         login.appendChild(document.createTextNode("Logout"));
-        window.localStorage.removeItem("auth")
-        window.location.reload();
+        login.addEventListener("click", () => { 
+            window.localStorage.removeItem("authToken");
+            window.localStorage.removeItem("userId");
+            window.location.href = "/";
+        });
     } else {
         login.appendChild(document.createTextNode("Login"));
         login.addEventListener("click", () => { window.location.href = `${url}/login`; });

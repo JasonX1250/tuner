@@ -21,8 +21,8 @@ async function login() {
     });
     if (response.ok) {
         const data = await response.json();
-        console.log(data);
-        // store auth token somewhere
-        // redirect page
+        window.localStorage.setItem("userId", data.userId);
+        window.localStorage.setItem("authToken", data.authToken);
+        window.location.href = `${url}`;
     }
 }

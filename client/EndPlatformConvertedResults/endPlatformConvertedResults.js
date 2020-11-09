@@ -8,7 +8,7 @@ window.onload = async () => {
     
     // add event listener to continue button
     document.getElementById("add-to-playlists-btn").addEventListener("click", finalizeSelection);
-    document.getElementById("go-back-btn").addEventListener("click", () => { window.location.href = `${url}/selectEndPlatform`; });
+    document.getElementById("go-back-btn").addEventListener("click", () => { window.location.href = `${url}/selectEndPlatforms`; });
 }
 
 const platformLogos = document.getElementById("platform-logos");

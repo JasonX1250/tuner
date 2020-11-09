@@ -66,8 +66,8 @@ async function finalizeSelection() {
                 "Content-Type": "application/json;charset=utf-8"
             },
             body: JSON.stringify({
-                platform: startPlatform,
-                media: mediaToConvert
+                platform: endPlatforms,
+                media: JSON.parse(window.localStorage.getItem("mediaToConvert"))
             })
         });
         if (response.ok) {

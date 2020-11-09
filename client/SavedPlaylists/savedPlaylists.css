@@ -1,0 +1,32 @@
+h2 {
+    text-align: center;
+}
+
+p {
+    text-align: center;
+    font-size: 25px;
+}
+
+#buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#playlists-found {
+    height: 500px;
+    overflow-y: auto;
+}
+
+.result {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}

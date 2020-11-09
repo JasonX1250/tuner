@@ -72,5 +72,5 @@ function addSearchResults() {
 
 function selectMedia(media) {
     mediaToConvert = [media];
-    window.location.href = `${url}/selectEndPlatform`;
+    window.location.href = `${url}/selectEndPlatforms`;
 }
