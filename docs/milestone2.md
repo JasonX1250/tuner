@@ -1,5 +1,9 @@
 # Milestone 2
 
+## Deployment
+
+The tuner app can be found at <https://tuner-app.herokuapp.com/>
+
 ## API Overview
 
 ### GET Requests
@@ -124,6 +128,20 @@ Deletes the specified playlist from the user's collection of saved playlists
 | auth | String | Authetication for verifying the user |
 | playlistId | String | Id of the playlist to delete |
 
+## Examples of CRUD Operations
+
+In this image, a POST request will be made to create a new playlist to add media to. The user will specify the title and privacy of the new playlist and a request will be sent to the `/newPlaylist` endpoint upon clicking *Continue*.
+![Creating a new playlist](CrudScreenshots/NewPlaylist.png)
+
+In this image, a GET request was made to retrieve the user's playlists saved under their account. They have access to the info of each playlist and the options to (1) convert the media in the selected playlist to another platform, (2) add the media in the selected playlist to another playlist on the same platform, or (3) delete the saved playlist from their account. The deletion will require making a DELETE request to the server, while the other two options will redirect the user to the proper page.
+![Saved playlists](CrudScreenshots/SavedPlaylists.png)
+
+In this image, a POST request was made to the `/convertMedia` endpoint. The response is then displayed onto the webpage, allowing users to choose which media pieces they would like to add to playlist(s). Here, we can also see that the user can also save it to their account with a specified title; this can be done with a POST request from the client to the `/savePlaylist` endpoint.
+![Converted media](CrudScreenshots/ConvertedMedia.png)
+
+This image shows the result of POST request to the `/addToPlaylists` endpoint. It displays the status of adding the selected media to the specified playlists and reports back which playlists the media have been successfully added to.
+![Successfully added to playlists](CrudScreenshots/Success.png)
+
 ## Division of Labor
 
 ### Jason
@@ -132,15 +150,18 @@ Deletes the specified playlist from the user's collection of saved playlists
 - Backend Skeleton Code
   - server/index.js
 - Configured Routing and added API calls to server from client
-  - StartPlatformQuery  ==>  /startQuery
-  - StartPlatformQueryResults  ==>  /startQueryResults
-  - SelectEndPlatform  ==>  /selectEndPlatform
-  - EndPlatformConvertedResults  ==>  /convertedMedia
-  - SpecifyPlaylistsToAddTo  ==>  /playlistQuery
-  - SelectPlaylistToAddTo  ==>  /addToPlaylists
-  - AddToPlaylistResult  ==>  /addToPlaylistsResults
-  - Login  ==>  /login
-  - SavedPlaylists  ==>  /savedPlaylists
+  - StartPlatformQuery  &#8594;  /startQuery
+  - StartPlatformQueryResults  &#8594;  /startQueryResults
+  - SelectEndPlatform  &#8594;  /selectEndPlatform
+  - EndPlatformConvertedResults  &#8594;  /convertedMedia
+  - SpecifyPlaylistsToAddTo  &#8594;  /playlistQuery
+  - SelectPlaylistToAddTo  &#8594;  /addToPlaylists
+  - AddToPlaylistResult  &#8594;  /addToPlaylistsResults
+  - Login  &#8594;  /login
+  - SavedPlaylists  &#8594;  /savedPlaylists
+- Heroku Deployment
+- Setup (on local machine) Doc
+- CRUD Screenshots and Descriptions
 
 ### Yaocao
 
