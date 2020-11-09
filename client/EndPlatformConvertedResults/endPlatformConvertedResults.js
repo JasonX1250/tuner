@@ -5,10 +5,13 @@ window.onload = async () => {
     addPlatformLogos();
     addConvertedResults();
     loadLogin();
-    
+
     // add event listener to continue button
     document.getElementById("add-to-playlists-btn").addEventListener("click", finalizeSelection);
-    document.getElementById("go-back-btn").addEventListener("click", () => { window.location.href = `${url}/selectEndPlatforms`; });
+    document.getElementById("go-back-btn").addEventListener("click", () => {
+        window.location.href = `${url}/selectEndPlatforms`;
+    });
+    document.getElementById("save-playlist-btn").addEventListener("click", savePlaylist);
 }
 
 const platformLogos = document.getElementById("platform-logos");
@@ -24,7 +27,7 @@ function loadConvertedMedia() {
 function addPlatformLogos() {
     for (const endPlatform of endPlatforms) {
         const startPlatformImg = document.createElement("img");
-        startPlatformImg.id="start-platform-icon";
+        startPlatformImg.id = "start-platform-icon";
         startPlatformImg.src = `../Logos/${startPlatform}.jpg`;
         platformLogos.appendChild(startPlatformImg);
         const startPlatformText = document.createElement("div");
@@ -32,7 +35,7 @@ function addPlatformLogos() {
         startPlatformText.appendChild(document.createTextNode(`${startPlatform}  \u2192  `));
         platformLogos.appendChild(startPlatformText);
         const endPlatformImg = document.createElement("img");
-        endPlatformImg.id="end-platform-icon";
+        endPlatformImg.id = "end-platform-icon";
         endPlatformImg.src = `../Logos/${endPlatforms[0]}.jpg`;
         platformLogos.appendChild(endPlatformImg);
         const endPlatformText = document.createElement("div");
@@ -81,7 +84,9 @@ function addConvertedResults() {
         const selectBtn = document.createElement("button");
         selectBtn.classList.add("btn", "btn-danger");
         selectBtn.appendChild(document.createTextNode("Select"));
-        selectBtn.addEventListener("click", () => { selectMedia(selectBtn, media); });
+        selectBtn.addEventListener("click", () => {
+            selectMedia(selectBtn, media);
+        });
         selectBtnDiv.appendChild(selectBtn);
         result.appendChild(selectBtnDiv);
         // add each result to the search-results container
@@ -114,6 +119,33 @@ function finalizeSelection() {
         window.localStorage.setItem("selectedConvertedMedia", JSON.stringify(selectedConvertedMedia));
         window.location.href = `${url}/playlistQuery`;
     } else {
-        window.alert("You must select at least one piece of media to add to playlists.")
+        window.alert("You must select at least one piece of media to add to playlists.");
+    }
+}
+
+async function savePlaylist() {
+    if (selectedConvertedMedia.length < 1) {
+        window.alert("You must select at least one piece of media to add to playlists.");
+        return;
+    }
+    const response = await fetch(`${url}/savePlaylist`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json;charset=utf-8"
+        },
+        body: JSON.stringify({
+            userId: window.localStorage.getItem("userId"),
+            auth: window.localStorage.getItem("authToken"),
+            title: document.getElementById("collection-title").value,
+            media: selectedConvertedMedia,
+        })
+    });
+    if (response.ok) {
+        const data = await response.json();
+        if (data.playlistId === -1) {
+            window.alert("Failed to save playlist on Tuner.");
+        } else {
+            window.alert(`The playlist "${document.getElementById("collection-title").value}" has been successfully saved on Tuner.`)
+        }
     }
 }

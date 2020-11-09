@@ -50,12 +50,16 @@ function addFoundPlaylists() {
         infoDiv.appendChild(link);
         result.appendChild(infoDiv);
         // add buttons for each result
-        const options = ["Convert Platforms", "Add to Playlists"];
+        const options = ["Convert Platforms", "Add to Playlists", "Delete"];
         for (opt of options) {
             const selectBtnDiv = document.createElement("div");
             selectBtnDiv.classList.add("col-2");
             const selectBtn = document.createElement("button");
-            selectBtn.classList.add("btn", "btn-primary");
+            if (opt === "Delete") {
+                selectBtn.classList.add("btn", "btn-danger");
+            } else {
+                selectBtn.classList.add("btn", "btn-primary");
+            }
             selectBtn.appendChild(document.createTextNode(opt));
             // add event listeners for each button
             if (opt === "Convert Platforms") {
@@ -69,6 +73,23 @@ function addFoundPlaylists() {
                     window.localStorage.setItem("startPlatform", p.platform);
                     window.localStorage.setItem("selectedConvertedMedia", JSON.stringify(p));
                     window.location.href = `${url}/playlistQuery`;
+                });
+            } else if (opt === "Delete") {
+                selectBtn.addEventListener("click", async () => {
+                    const response = await fetch(`${url}/deleteSavedPlaylist`, {
+                        method: "DELETE",
+                        headers: {
+                            "Content-Type": "application/json;charset=utf-8"
+                        },
+                        body: JSON.stringify({
+                            userId: "exampleUserId",
+                            auth: "exampleAuth",
+                            playlistId: "examplePlaylistId"
+                        })
+                    });
+                    if (response.ok) {
+                        window.location.reload();
+                    }
                 });
             }
             selectBtnDiv.appendChild(selectBtn);
