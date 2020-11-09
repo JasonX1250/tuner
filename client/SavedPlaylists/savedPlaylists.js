@@ -1,6 +1,5 @@
 window.onload = async () => {
-    await loadMenu();
-    await loadPlatforms();
+    loadMenu();
     await loadPlaylistsFound();
     addFoundPlaylists();
     loadLogin();
@@ -70,7 +69,7 @@ function addFoundPlaylists() {
                 });
             } else if (opt === "Add to Playlists") {
                 selectBtn.addEventListener("click", () => {
-                    window.localStorage.setItem("startPlatform", p.platform);
+                    window.localStorage.setItem("endPlatform", p.platform);
                     window.localStorage.setItem("selectedConvertedMedia", JSON.stringify(p));
                     window.location.href = `${url}/playlistQuery`;
                 });

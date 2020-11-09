@@ -1,45 +1,39 @@
 window.onload = async () => {
-    await loadMenu();
-    await loadPlatforms();
-    await loadPlaylistsFound();
+    loadMenu();
     addPlatformLogos();
     addFoundPlaylists();
     loadLogin();
-    
+
     // add event listener to continue button
     document.getElementById("add-to-playlists-btn").addEventListener("click", finalizeSelection);
-    document.getElementById("go-back-btn").addEventListener("click", () => { window.location.href = `${url}/playlistQuery`; });
+    document.getElementById("go-back-btn").addEventListener("click", () => {
+        window.location.href = `${url}/playlistQuery`;
+    });
 }
 
-const platformLogos = document.getElementById("platform-logos");
-const playlistsFoundContainer = document.getElementById("playlists-found");
-
-function loadPlaylistsFound() {
-    const storedPlaylistsFound = window.localStorage.getItem("playlistsFound");
-    if (storedPlaylistsFound !== null) {
-        playlistsFound = JSON.parse(storedPlaylistsFound);
-    }
-}
+const playlistsFound = JSON.parse(window.localStorage.getItem("playlistsFound"));
+const playlistsToAddTo = [];
 
 function addPlatformLogos() {
-    for (const endPlatform of endPlatforms) {
-        const startPlatformImg = document.createElement("img");
-        startPlatformImg.id="start-platform-icon";
-        startPlatformImg.src = `../Logos/${startPlatform}.jpg`;
-        platformLogos.appendChild(startPlatformImg);
-        const startPlatformText = document.createElement("div");
-        startPlatformText.classList.add("platform-name");
-        startPlatformText.appendChild(document.createTextNode(`${startPlatform}  \u2192  `));
-        platformLogos.appendChild(startPlatformText);
-        const endPlatformImg = document.createElement("img");
-        endPlatformImg.id="end-platform-icon";
-        endPlatformImg.src = `../Logos/${endPlatform}.jpg`;
-        platformLogos.appendChild(endPlatformImg);
-        const endPlatformText = document.createElement("div");
-        endPlatformText.classList.add("platform-name");
-        endPlatformText.appendChild(document.createTextNode(`${endPlatform}`));
-        platformLogos.appendChild(endPlatformText);
-    }
+    const startPlatform = window.localStorage.getItem("startPlatform");
+    const endPlatform = window.localStorage.getItem("endPlatform");
+    const platformLogos = document.getElementById("platform-logos");
+    const startPlatformImg = document.createElement("img");
+    startPlatformImg.id = "start-platform-icon";
+    startPlatformImg.src = `../Logos/${startPlatform}.jpg`;
+    platformLogos.appendChild(startPlatformImg);
+    const startPlatformText = document.createElement("div");
+    startPlatformText.classList.add("platform-name");
+    startPlatformText.appendChild(document.createTextNode(`${startPlatform}  \u2192  `));
+    platformLogos.appendChild(startPlatformText);
+    const endPlatformImg = document.createElement("img");
+    endPlatformImg.id = "end-platform-icon";
+    endPlatformImg.src = `../Logos/${endPlatform}.jpg`;
+    platformLogos.appendChild(endPlatformImg);
+    const endPlatformText = document.createElement("div");
+    endPlatformText.classList.add("platform-name");
+    endPlatformText.appendChild(document.createTextNode(`${endPlatform}`));
+    platformLogos.appendChild(endPlatformText);
 }
 
 function addFoundPlaylists() {
@@ -81,11 +75,13 @@ function addFoundPlaylists() {
         const selectBtn = document.createElement("button");
         selectBtn.classList.add("btn", "btn-danger");
         selectBtn.appendChild(document.createTextNode("Select"));
-        selectBtn.addEventListener("click", () => { selectMedia(selectBtn, media); });
+        selectBtn.addEventListener("click", () => {
+            selectMedia(selectBtn, media);
+        });
         selectBtnDiv.appendChild(selectBtn);
         result.appendChild(selectBtnDiv);
         // add each result to the search-results container
-        playlistsFoundContainer.appendChild(result);
+        document.getElementById("playlists-found").appendChild(result);
     }
 }
 
@@ -120,9 +116,9 @@ async function finalizeSelection() {
             body: JSON.stringify({
                 userId: window.localStorage.getItem("userId"),
                 auth: window.localStorage.getItem("authToken"),
-                platform: endPlatforms,
-                media: mediaToConvert,
-                playlists: playlistsToAddTo
+                platform: JSON.parse(window.localStorage.getItem("endPlatforms")),
+                media: JSON.parse(window.localStorage.getItem("mediaToConvert")),
+                playlists: JSON.parse(window.localStorage.getItem("playlistsToAddTo"))
             })
         });
         if (response.ok) {

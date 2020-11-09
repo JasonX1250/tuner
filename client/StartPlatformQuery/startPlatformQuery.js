@@ -1,17 +1,16 @@
 window.onload = async () => {
-    await loadPlatforms();
-    await loadMenu();
+    loadMenu();
     addStartPlatformLogo();
     applyPlatformSpecifics();
     loadLogin();
 
     // add event listener to 'Search' button
     document.getElementById("search-btn").addEventListener("click", query);
-}
-
-const startPlatformLogo = document.getElementById("start-platform-logo");
+};
+const startPlatform = window.localStorage.getItem("startPlatform");
 
 function addStartPlatformLogo() {
+    const startPlatformLogo = document.getElementById("start-platform-logo");
     const logo = document.createElement("img");
     logo.id="start-platform-icon";
     logo.src = `../Logos/${startPlatform}.jpg`;
@@ -67,7 +66,7 @@ async function query() {
     const response = await fetch(`${url}/${query}`);
     if (response.ok) {
         const data = await response.json();
-        setMediaToConvert(data);
+        window.localStorage.setItem("mediaToConvert", JSON.stringify(data));
         window.location.href = `${url}/startQueryResults`;
     }
 }

@@ -1,7 +1,5 @@
 window.onload = async () => {
-    await loadMenu();
-    await loadPlatforms();
-    await loadConvertedMedia();
+    loadMenu();
     addPlatformLogos();
     addConvertedResults();
     loadLogin();
@@ -14,35 +12,29 @@ window.onload = async () => {
     document.getElementById("save-playlist-btn").addEventListener("click", savePlaylist);
 }
 
-const platformLogos = document.getElementById("platform-logos");
-const convertedResults = document.getElementById("converted-results");
-
-function loadConvertedMedia() {
-    const storedConvertedMedia = window.localStorage.getItem("convertedMedia");
-    if (storedConvertedMedia !== null) {
-        convertedMedia = JSON.parse(storedConvertedMedia);
-    }
-}
+const convertedMedia = JSON.parse(window.localStorage.getItem("convertedMedia"));
+const selectedConvertedMedia = [];
 
 function addPlatformLogos() {
-    for (const endPlatform of endPlatforms) {
-        const startPlatformImg = document.createElement("img");
-        startPlatformImg.id = "start-platform-icon";
-        startPlatformImg.src = `../Logos/${startPlatform}.jpg`;
-        platformLogos.appendChild(startPlatformImg);
-        const startPlatformText = document.createElement("div");
-        startPlatformText.classList.add("platform-name");
-        startPlatformText.appendChild(document.createTextNode(`${startPlatform}  \u2192  `));
-        platformLogos.appendChild(startPlatformText);
-        const endPlatformImg = document.createElement("img");
-        endPlatformImg.id = "end-platform-icon";
-        endPlatformImg.src = `../Logos/${endPlatforms[0]}.jpg`;
-        platformLogos.appendChild(endPlatformImg);
-        const endPlatformText = document.createElement("div");
-        endPlatformText.classList.add("platform-name");
-        endPlatformText.appendChild(document.createTextNode(`${endPlatforms[0]}`));
-        platformLogos.appendChild(endPlatformText);
-    }
+    const startPlatform = window.localStorage.getItem("startPlatform");
+    const endPlatform = window.localStorage.getItem("endPlatform");
+    const platformLogos = document.getElementById("platform-logos");
+    const startPlatformImg = document.createElement("img");
+    startPlatformImg.id = "start-platform-icon";
+    startPlatformImg.src = `../Logos/${startPlatform}.jpg`;
+    platformLogos.appendChild(startPlatformImg);
+    const startPlatformText = document.createElement("div");
+    startPlatformText.classList.add("platform-name");
+    startPlatformText.appendChild(document.createTextNode(`${startPlatform}  \u2192  `));
+    platformLogos.appendChild(startPlatformText);
+    const endPlatformImg = document.createElement("img");
+    endPlatformImg.id = "end-platform-icon";
+    endPlatformImg.src = `../Logos/${endPlatform}.jpg`;
+    platformLogos.appendChild(endPlatformImg);
+    const endPlatformText = document.createElement("div");
+    endPlatformText.classList.add("platform-name");
+    endPlatformText.appendChild(document.createTextNode(`${endPlatform}`));
+    platformLogos.appendChild(endPlatformText);
 }
 
 function addConvertedResults() {
@@ -90,7 +82,7 @@ function addConvertedResults() {
         selectBtnDiv.appendChild(selectBtn);
         result.appendChild(selectBtnDiv);
         // add each result to the search-results container
-        convertedResults.appendChild(result);
+        document.getElementById("converted-results").appendChild(result);
     }
 }
 

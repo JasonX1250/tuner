@@ -1,6 +1,5 @@
 window.onload = async () => {
-    await loadPlatforms();
-    await loadMenu();
+    loadMenu();
     loadLogin();
 
     // add event listener to 'Search' button

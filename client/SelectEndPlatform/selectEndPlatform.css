@@ -29,11 +29,7 @@ h2 {
     margin-left: 25%;
 }
 
-.not-selected-platform {
-    background-color: #b19cd9 !important;
-}
-
-.selected-platform {
+.select-platform {
     background-color: #6a5acd !important;
 }
 

@@ -1,25 +1,26 @@
 window.onload = async () => {
-    await loadMenu();
-    await loadPlatforms();
+    loadMenu();
     addEndPlatformLogo();
     loadLogin();
 
     // add event listener to 'Continue' button
     document.getElementById("continue-btn").addEventListener("click", specifyPlaylists);
     document.getElementById("go-back-btn").addEventListener("click", () => {
-        window.location.href = `${url}/convertedMedia`;
+        window.history.back();
     });
 }
+
+const endPlatform = window.localStorage.getItem("endPlatform");
 
 function addEndPlatformLogo() {
     const endPlatformLogo = document.getElementById("end-platform-logo");
     const logo = document.createElement("img");
     logo.id = "end-platform-icon";
-    logo.src = `../Logos/${endPlatforms[0]}.jpg`;
+    logo.src = `../Logos/${endPlatform}.jpg`;
     endPlatformLogo.appendChild(logo);
     const text = document.createElement("div");
     text.id = "end-platform-name";
-    text.appendChild(document.createTextNode(`${endPlatforms[0]}`));
+    text.appendChild(document.createTextNode(`${endPlatform}`));
     endPlatformLogo.appendChild(text);
 }
 
@@ -33,7 +34,7 @@ async function specifyPlaylists() {
             body: JSON.stringify({
                 userId: window.localStorage.getItem("userId"),
                 auth: window.localStorage.getItem("authToken"),
-                platform: endPlatforms,
+                platform: endPlatform,
                 details: {
                     title: document.getElementById("new-playlist-title").value,
                     private: document.getElementById("privacy-private").checked
@@ -47,7 +48,7 @@ async function specifyPlaylists() {
             window.location.href = `${url}/addToPlaylists`;
         }
     } else {
-        let query = `platform=${endPlatforms[0]}`;
+        let query = `platform=${endPlatform}`;
         if (document.getElementById("find-existing-playlists").checked) {
             query += "&queryMethod=find";
         } else if (document.getElementById("link-existing-playlists").checked) {

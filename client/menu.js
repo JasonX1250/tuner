@@ -1,3 +1,6 @@
+const availablePlatforms = ["Spotify", "YouTube"];
+const url = "http://localhost:3000";
+
 function openMenu() {
     document.getElementById("menu").style.width = "250px";
     document.getElementById("main").style.marginLeft = "250px";
@@ -15,7 +18,7 @@ function loadMenu() {
     for (const platform of availablePlatforms) {
         const tab = document.createElement("a");
         tab.href = "/startQuery";
-        tab.addEventListener("click", ()=> { setStartPlatform(platform); });
+        tab.addEventListener("click", ()=> { window.localStorage.setItem("startPlatform", platform); });
         tab.appendChild(document.createTextNode(`${platform}`));
         menu.appendChild(tab);
     }

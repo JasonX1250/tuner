@@ -1,7 +1,5 @@
 window.onload = async () => {
     await loadMenu();
-    await loadPlatforms();
-    await loadMediaToConvert();
     addStartPlatformLogo();
     addSearchResults();
     loadLogin();
@@ -9,10 +7,11 @@ window.onload = async () => {
     document.getElementById("go-back-btn").addEventListener("click", () => { window.location.href = `${url}/startQuery`; });
 }
 
-const startPlatformLogo = document.getElementById("start-platform-logo");
-const searchResults = document.getElementById("search-results");
+const mediaToConvert = JSON.parse(window.localStorage.getItem("mediaToConvert"));
 
 function addStartPlatformLogo() {
+    const startPlatform = window.localStorage.getItem("startPlatform");
+    const startPlatformLogo = document.getElementById("start-platform-logo");
     const logo = document.createElement("img");
     logo.id="start-platform-icon";
     logo.src = `../Logos/${startPlatform}.jpg`;
@@ -66,11 +65,11 @@ function addSearchResults() {
         selectBtnDiv.appendChild(selectBtn);
         result.appendChild(selectBtnDiv);
         // add each result to the search-results container
-        searchResults.appendChild(result);
+        document.getElementById("search-results").appendChild(result);
     }
 }
 
 function selectMedia(media) {
-    mediaToConvert = [media];
+    window.localStorage.setItem("mediaToConvert", JSON.stringify(media));
     window.location.href = `${url}/selectEndPlatforms`;
 }
