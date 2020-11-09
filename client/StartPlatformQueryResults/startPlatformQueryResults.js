@@ -57,12 +57,17 @@ function addSearchResults() {
         const selectBtnDiv = document.createElement("div");
         selectBtnDiv.classList.add("col-1");
         const selectBtn = document.createElement("button");
+        selectBtn.addEventListener("click", () => { selectMedia(media); });
         selectBtn.classList.add("btn", "btn-primary");
         selectBtn.appendChild(document.createTextNode("Select"));
         selectBtnDiv.appendChild(selectBtn);
         result.appendChild(selectBtnDiv);
-        console.log(result.outerHTML);
         // add each result to the search-results container
         searchResults.appendChild(result);
     }
+}
+
+function selectMedia(media) {
+    mediaToConvert = [media];
+    window.location.replace(`${url}/selectEndPlatform`);
 }

@@ -6,24 +6,14 @@ let convertedMedia = [];
 let selectedConvertedMedia = [];
 let playlistsFound = [];
 let playlistsToAddTo = [];
+const url = "http://localhost:3000";
 
 function loadMenu() {
     const menu = document.getElementById("menu");
     for (const platform of availablePlatforms) {
         const tab = document.createElement("a");
-        tab.href = "../StartPlatformQuery/startPlatformQuery.html";
-        tab.onclick = setStartPlatform(platform);
-        tab.appendChild(document.createTextNode(`${platform}`));
-        menu.appendChild(tab);
-    }
-}
-
-function loadMenuFromHome() {
-    const menu = document.getElementById("menu");
-    for (const platform of availablePlatforms) {
-        const tab = document.createElement("a");
-        tab.href = "StartPlatformQuery/startPlatformQuery.html";
-        tab.onclick = setStartPlatform(platform);
+        tab.href = "/startQuery";
+        tab.addEventListener("click", ()=> { setStartPlatform(platform); });
         tab.appendChild(document.createTextNode(`${platform}`));
         menu.appendChild(tab);
     }

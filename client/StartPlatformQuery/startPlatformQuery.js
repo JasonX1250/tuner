@@ -28,13 +28,13 @@ function applyPlatformSpecifics() {
     let authorSynonym = "";
     switch(startPlatform) {
         case "YouTube": {
-            mediaTypeOptions = ["video", "playlist"];
+            mediaTypeOptions = ["Video", "Playlist"];
             authorSynonym = "Channel";
             break;
         }
 
         case "Spotify": {
-            mediaTypeOptions = ["track", "album", "playlist"];
+            mediaTypeOptions = ["Track", "Album", "Playlist"];
             authorSynonym = "Artist";
             break;
         }
@@ -49,15 +49,24 @@ function applyPlatformSpecifics() {
     authorLabel.appendChild(document.createTextNode(authorSynonym));
 }
 
-function query() {
-    const query = {};
+async function query() {
+    let query = "queryMedia?";
+    query += `platform=${startPlatform}`;
     if (document.getElementById("link").checked) {
-        query["link"] = document.getElementById("media-link").value;
+        query += "&queryMethod=link";
+        query += `&link=${document.getElementById("media-link").value}`;
     } else {
-        query["mediaType"] = document.getElementById("media-type").value;
-        query["title"] = document.getElementById("media-title").value;
+        query += "&queryMethod=query";
+        query += `&title=${document.getElementById("media-title").value}`;
+        query += `&type=${document.getElementById("media-type").value}`;
         if (document.getElementById("author").value !== null || document.getElementById("author").value !== "") {
-            query["author"] = document.getElementById("author").value;
+            query += `&author=${document.getElementById("author").value}`;
         }
+    }
+    const response = await fetch(`${url}/${query}`);
+    if (response.ok) {
+        const data = await response.json();
+        setMediaToConvert(data);
+        window.location.replace(`${url}/startQueryResults`);
     }
 }
