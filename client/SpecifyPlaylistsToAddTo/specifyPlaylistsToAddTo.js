@@ -31,9 +31,9 @@ async function specifyPlaylists() {
                 "Content-Type": "application/json;charset=utf-8"
             },
             body: JSON.stringify({
-                userId: "exampleUserId",
-                auth: "exampleAuth",
-                platform: endPlatforms[0],
+                userId: window.localStorage.getItem("userId"),
+                auth: window.localStorage.getItem("authToken"),
+                platform: endPlatforms,
                 details: {
                     title: document.getElementById("new-playlist-title").value,
                     private: document.getElementById("privacy-private").checked

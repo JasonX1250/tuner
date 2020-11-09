@@ -82,9 +82,9 @@ function addFoundPlaylists() {
                             "Content-Type": "application/json;charset=utf-8"
                         },
                         body: JSON.stringify({
-                            userId: "exampleUserId",
-                            auth: "exampleAuth",
-                            playlistId: "examplePlaylistId"
+                            userId: window.localStorage.getItem("userId"),
+                            auth: window.localStorage.getItem("authToken"),
+                            playlistId: p.playlistId
                         })
                     });
                     if (response.ok) {
