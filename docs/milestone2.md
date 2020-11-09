@@ -97,13 +97,21 @@ Saves the collection of converted media to user's account and returns a string r
 | userId | String | Id used to specify the user |
 | auth | String | Authetication for verifying the user |
 | title | String | Name for the collection of media to save |
-| media | Array[String] | List of links to media to be added to playlists |
+| media | Array[Object] | List of media to be saved as a collection under the user's account |
 
 - **media** object fields
   - *title* - String specifying the title of the media
   - *author* - String specifying the author of the media
   - *duration* - String specifying the duration of the media
   - *link* - String specifying the link for the media
+
+> ***login***  
+Autheticate the user with the given credentials and returns a userId and accessToken for the account upon success.
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| username | String | Username for the account |
+| password | String | Password for the account |
 
 ### DELETE Requests
 
@@ -124,13 +132,15 @@ Deletes the specified playlist from the user's collection of saved playlists
 - Backend Skeleton Code
   - server/index.js
 - Configured Routing and added API calls to server from client
-  - StartPlatformQuery ( /startQuery )
-  - StartPlatformQueryResults ( /startQueryResults )
-  - SelectEndPlatform ( /selectEndPlatform )
-  - EndPlatformConvertedResults ( /convertedMedia )
-  - SpecifyPlaylistsToAddTo ( /playlistQuery )
-  - SelectPlaylistToAddTo ( /addToPlaylists )
-  - AddToPlaylistResult( /addToPlaylistsResults )
+  - StartPlatformQuery  ==>  /startQuery
+  - StartPlatformQueryResults  ==>  /startQueryResults
+  - SelectEndPlatform  ==>  /selectEndPlatform
+  - EndPlatformConvertedResults  ==>  /convertedMedia
+  - SpecifyPlaylistsToAddTo  ==>  /playlistQuery
+  - SelectPlaylistToAddTo  ==>  /addToPlaylists
+  - AddToPlaylistResult  ==>  /addToPlaylistsResults
+  - Login  ==>  /login
+  - SavedPlaylists  ==>  /savedPlaylists
 
 ### Yaocao
 
