@@ -6,7 +6,7 @@ let convertedMedia = [];
 let selectedConvertedMedia = [];
 let playlistsFound = [];
 let playlistsToAddTo = [];
-const url = "http://localhost:3000";
+const url = "https://tuner-app.herokuapp.com";
 
 function setStartPlatform(platform) {
     startPlatform = platform;
