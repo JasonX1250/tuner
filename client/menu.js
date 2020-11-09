@@ -46,6 +46,6 @@ function loadLogin() {
         });
     } else {
         login.appendChild(document.createTextNode("Login"));
-        login.addEventListener("click", () => { window.location.href = `${url}/login`; });
+        login.addEventListener("click", () => { window.location.href = `${url}login`; });
     }
 }
