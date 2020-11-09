@@ -3,6 +3,7 @@ window.onload = async () => {
     await loadMenu();
     addStartPlatformLogo();
     applyPlatformSpecifics();
+    loadLogin();
 
     // add event listener to 'Search' button
     document.getElementById("search-btn").addEventListener("click", query);

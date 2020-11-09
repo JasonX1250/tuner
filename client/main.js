@@ -8,17 +8,6 @@ let playlistsFound = [];
 let playlistsToAddTo = [];
 const url = "http://localhost:3000";
 
-function loadMenu() {
-    const menu = document.getElementById("menu");
-    for (const platform of availablePlatforms) {
-        const tab = document.createElement("a");
-        tab.href = "/startQuery";
-        tab.addEventListener("click", ()=> { setStartPlatform(platform); });
-        tab.appendChild(document.createTextNode(`${platform}`));
-        menu.appendChild(tab);
-    }
-}
-
 function setStartPlatform(platform) {
     startPlatform = platform;
     window.localStorage.setItem("startPlatform", startPlatform);

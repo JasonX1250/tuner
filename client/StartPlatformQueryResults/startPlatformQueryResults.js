@@ -4,6 +4,7 @@ window.onload = async () => {
     await loadMediaToConvert();
     addStartPlatformLogo();
     addSearchResults();
+    loadLogin();
 
     document.getElementById("go-back-btn").addEventListener("click", () => { window.location.href = `${url}/startQuery`; });
 }

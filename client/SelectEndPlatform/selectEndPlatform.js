@@ -3,6 +3,7 @@ window.onload = async () => {
     await loadPlatforms();
     addStartPlatformLogo();
     addAvailableEndPlatforms();
+    loadLogin();
 
     // add button event listeners
     document.getElementById("continue-btn").addEventListener("click", finalizeSelection);

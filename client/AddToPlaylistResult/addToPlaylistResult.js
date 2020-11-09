@@ -3,6 +3,7 @@ window.onload = async () => {
     await loadPlatforms();
     addPlatformLogos();
     showSuccess();
+    loadLogin();
 
     document.getElementById("convert-more-btn").addEventListener("click", () => { window.location.href = `${url}/startQuery`; });
     document.getElementById("go-back-btn").addEventListener("click", () => { window.location.href = `${url}/addToPlaylists`; });

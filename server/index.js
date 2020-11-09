@@ -27,6 +27,7 @@ app.use("/convertedMedia", express.static(path.join(__dirname, "../client/EndPla
 app.use("/playlistQuery", express.static(path.join(__dirname, "../client/SpecifyPlaylistsToAddTo")));
 app.use("/addToPlaylists", express.static(path.join(__dirname, "../client/SelectPlaylistsToAddTo")));
 app.use("/addToPlaylistsResults", express.static(path.join(__dirname, "../client/AddToPlaylistResult")));
+app.use("/login", express.static(path.join(__dirname, "../client/Login")));
 
 app.get("/queryMedia", (req, res) => {
     const platform = req.query.platform;
@@ -80,6 +81,12 @@ app.post("/savePlaylist", (req, res) => {
     const media = req.body.media;
     console.log(req.body);
     res.send("examplePlaylistId");
+});
+
+app.post("/getAuth", (req, res) => {
+    const accessToken = req.body.accessToken;
+    console.log(req.body);
+    res.send({ authToken: "exampleAccessToken" });
 });
 
 app.delete("/deleteSavedPlaylist", (req, res) => {

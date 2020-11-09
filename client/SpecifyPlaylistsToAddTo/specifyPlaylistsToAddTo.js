@@ -2,6 +2,7 @@ window.onload = async () => {
     await loadMenu();
     await loadPlatforms();
     addEndPlatformLogo();
+    loadLogin();
 
     // add event listener to 'Continue' button
     document.getElementById("continue-btn").addEventListener("click", specifyPlaylists);

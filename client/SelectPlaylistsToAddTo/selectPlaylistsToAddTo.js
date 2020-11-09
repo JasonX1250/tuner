@@ -4,6 +4,7 @@ window.onload = async () => {
     await loadPlaylistsFound();
     addPlatformLogos();
     addFoundPlaylists();
+    loadLogin();
     
     // add event listener to continue button
     document.getElementById("add-to-playlists-btn").addEventListener("click", finalizeSelection);
