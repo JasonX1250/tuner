@@ -21,7 +21,7 @@ Returns a list of media from the specified platform matching the given query par
 
   - *title* - String specifying the title of media to query for
   - *type* - String specifying type of media to query for
-  - *artist* (optional) - String specifying artist of media to query for
+  - *author* (optional) - String specifying author of media to query for
 
 Example: /queryMedia?platform=YouTube&queryMethod=query&title=exampleTitle&type=video
 
@@ -61,7 +61,7 @@ Returns a list of media found on the target platform matching the given input me
 
 - **media** object fields
   - *title* - String specifying the title of the media
-  - *artist* - String specifying the artist of the media
+  - *author* - String specifying the author of the media
   - *duration* - String specifying the duration of the media
 
 > ***newPlaylist***  
@@ -84,7 +84,8 @@ Adds the specified media to the target playlists and returns a list of Strings (
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | userId | String | Id used to specify the user |
-| auth | String | Authetication for verifying the user |
+| auth | String | Authentication for verifying the user |
+| platform | String | Platform that the playlists are on |
 | media | Array[String] | List of links to media to be added to playlists |
 | playlists | Array[String] | List of links to playlists to add the media to |
 
@@ -100,7 +101,7 @@ Saves the collection of converted media to user's account and returns a string r
 
 - **media** object fields
   - *title* - String specifying the title of the media
-  - *artist* - String specifying the artist of the media
+  - *author* - String specifying the author of the media
   - *duration* - String specifying the duration of the media
   - *link* - String specifying the link for the media
 
@@ -122,6 +123,14 @@ Deletes the specified playlist from the user's collection of saved playlists
 - API Overview
 - Backend Skeleton Code
   - server/index.js
+- Configured Routing and added API calls to server from client
+  - StartPlatformQuery ( /startQuery )
+  - StartPlatformQueryResults ( /startQueryResults )
+  - SelectEndPlatform ( /selectEndPlatform )
+  - EndPlatformConvertedResults ( /convertedMedia )
+  - SpecifyPlaylistsToAddTo ( /playlistQuery )
+  - SelectPlaylistToAddTo ( /addToPlaylists )
+  - AddToPlaylistResult( /addToPlaylistsResults )
 
 ### Yaocao
 
