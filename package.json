@@ -1,0 +1,28 @@
+{
+  "name": "tuner",
+  "version": "1.0.0",
+  "description": "> Web app for media conversion between different platforms.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.13.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JasonX1250/tuner.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JasonX1250/tuner/issues"
+  },
+  "homepage": "https://github.com/JasonX1250/tuner#readme"
+}
