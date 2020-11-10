@@ -165,4 +165,7 @@ This image shows the result of POST request to the `/addToPlaylists` endpoint. I
 
 ### Yaocao
 
+- Get the authorization from Spotify web api
+
+
 ### Alex
