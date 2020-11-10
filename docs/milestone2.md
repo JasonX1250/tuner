@@ -169,3 +169,7 @@ This image shows the result of POST request to the `/addToPlaylists` endpoint. I
 
 
 ### Alex
+
+- implemented some basic scripts 
+- login page
+- implemented google authentication 
