@@ -3,6 +3,15 @@
 const path = require("path");
 const express = require("express");
 const app = express();
+const passport = require('passport');
+const expressSession = require('express-session');  // for managing session state
+const LocalStrategy = require('passport-local').Strategy; // username/password strategy
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+var fs = require('fs');
+var readline = require('readline');
+require('dotenv').config();
+require("../server/googleAuth.js")(app,passport);
+
 
 const ex1 = [
     { title: "Title ABC", author: "Author ABC", duration: "5:00", link: "link.com/abc", img: "thumbnail.com/abc" },
