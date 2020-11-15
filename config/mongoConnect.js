@@ -21,4 +21,9 @@ const db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   // we're connected!
+  const testUsr = new User({username:'test'});
+  testUsr.save(function (err, fluffy) {
+    if (err) return console.error(err);
+    console.log("added");
+  });
 });
