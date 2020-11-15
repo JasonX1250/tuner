@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const url = "mongodb+srv://Alex:wrdad434@cluster0.yagjq.mongodb.net/UserDB?retryWrites=true&w=majority";
-// const client = new MongoClient(url);
+const getUsr = require('../config/models/user.js');
+const userSchema = getUsr.getUser();
+const User = mongoose.model('User', userSchema);
 async function run() {
     try {
         await mongoose.connect(url, {useNewUrlParser: true,  useUnifiedTopology: true });
@@ -9,9 +11,14 @@ async function run() {
     } catch (err) {
         console.log(err.stack);
     }
-    finally {
-        await mongoose.connection.close();
-    }
+    // finally {
+    //     await mongoose.connection.close();
+    // }
 }
 
-run().catch(console.dir);
+run();
+const db = mongoose.connection
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  // we're connected!
+});
