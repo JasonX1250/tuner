@@ -9,7 +9,9 @@
 
 - ***username : String(unique)*** *(Username for local authorization)*
 
-- ***password : String*** *(Password for local authorization, may be empty when user logs in with google/spotify)*
+- ***hash : String***
+
+- ***salt : String***
 
 - ***google :*** 
   - ***id: String(unique)*** *(googleId from GoogleStrat of the user used to fetch YouTube playlists)*
