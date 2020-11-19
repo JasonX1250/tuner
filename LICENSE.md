@@ -1,5 +1,5 @@
 
-Privacy Policy of Tuner
+# Privacy Policy of Tuner
 
 Tuner operates the tuner-app.herokuapp.com/ website, which provides the SERVICE.
 
