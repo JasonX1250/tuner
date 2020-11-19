@@ -14,7 +14,7 @@
 
   - ***salt : String*** *(local pw salt)*
 
-- ***google :*** 
+- ***google : {*** 
   - ***id: String*** *(googleId from GoogleStrat of the user used to fetch YouTube playlists -- need the correct scope)*
   
   - ***channel: String(link)*** *(Will be used to store the channel of the user for easy access* **CURRENTLY UNACCESSABLE due to verification issues**
@@ -23,7 +23,7 @@
   
   - ***refreshToken: String***} *(used to get new auth token when regular one expires)*
   
-- ***spotify :*** 
+- ***spotify : {*** 
   - ***id: String(unique)*** *(spotifyId)*
   
   - ***token: String*** *(authorization token for spotify)*
@@ -41,12 +41,12 @@
 
 - ***platform: String*** *(which platform playlist is on)*
 
-- ***media :*** *(list of media)*
+- ***media : {*** *(list of media)*
   - ***title: String*** *(title of the media)*
   
   - ***author: String*** *(artist of the media)*
   
-  - ***link: String(unique)*** *(link to playlist)* 
+  - ***link: String(unique)}*** *(link to playlist)* 
 
 
  
