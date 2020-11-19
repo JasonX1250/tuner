@@ -1,5 +1,6 @@
 const availablePlatforms = ["Spotify", "YouTube"];
-const url = "https://tuner-app.herokuapp.com";
+const url = "http://localhost:3000"
+// "https://tuner-app.herokuapp.com";
 
 function openMenu() {
     document.getElementById("menu").style.width = "250px";
@@ -26,6 +27,7 @@ function loadMenu() {
 
 function loadLogin() {
     const auth = window.localStorage.getItem("authToken");
+    console.log(auth + " auth token");
     // check auth with fetch, add && to if
     const login = document.getElementById("login");
     while (login.hasChildNodes()) {

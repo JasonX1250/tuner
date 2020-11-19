@@ -1,5 +1,4 @@
 const mongoose = require ("mongoose");
-var uniqueValidator = require('mongoose-unique-validator');
 
 const UserSchema = new mongoose.Schema({
   local : {
@@ -11,7 +10,6 @@ const UserSchema = new mongoose.Schema({
     id: String,
     token: String,
     rfreshToken: String
-    // channel: String // user channel need verification
   },
   spotify: { 
     id: String,
@@ -20,8 +18,6 @@ const UserSchema = new mongoose.Schema({
   },   
 });
 
-// UserSchema.plugin(uniqueValidator);
-// export model user with UserSchema
 module.exports = mongoose.model("User", UserSchema);
 
 
