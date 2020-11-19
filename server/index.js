@@ -1,16 +1,20 @@
 "use strict";
-
+const mongoose = require("mongoose");
+const connectDB = require("../config/mongoConnect");
+connectDB();
 const path = require("path");
 const express = require("express");
 const app = express();
-const passport = require('passport');
 const expressSession = require('express-session');  // for managing session state
-const LocalStrategy = require('passport-local').Strategy; // username/password strategy
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const passport = require('passport');
+require("../config/passport.js")(passport);
+const User = require('../models/user');
+
 var fs = require('fs');
 var readline = require('readline');
-require('dotenv').config();
-require("../server/googleAuth.js")(app,passport);
+
+
+const db = mongoose.connection;
 
 
 const ex1 = [
@@ -115,6 +119,11 @@ app.post("/getAuth", (req, res) => {
         authToken: "exampleAccessToken"
     });
 });
+
+app.post("/login", passport.authenticate('local',{
+    sucessRedirect : '/SavedPlaylists',
+    failureRedirect : '/login'
+}));
 
 app.delete("/deleteSavedPlaylist", (req, res) => {
     const userId = req.body.userId;
