@@ -49,5 +49,20 @@
   - ***link: String(unique)}*** *(link to playlist)* 
 
 
+
+## Division of Labor
+
+### Alex
+  - Database schema overview
+  - submitted app for verification for external use
+  - implemented both local and google passports in pasport.js
+  - restructured authentication paths
+  - created user and playlist schemas
+  - documented user and playlist schemas (milestone3.md)
+  - created Mongodb database/ dev users
+  - established connection to db with mongoose from the server
+  - set up user verification with passport and mongoose 
+  - restructured index.js into routes.js for easier maintanance
+
  
 
