@@ -29,14 +29,15 @@ function addSearchResults() {
         result.classList.add("row", "result");
         // image or thumbnail for each result
         const imgDiv = document.createElement("div");
-        imgDiv.classList.add("col-1");
+        imgDiv.classList.add("col-2", "thumbnail");
         const img = document.createElement("img");
+        img.classList.add("media-img");
         img.src = media.img;
         imgDiv.appendChild(img);
         result.appendChild(imgDiv);
         // general information for each result
         const infoDiv = document.createElement("div");
-        infoDiv.classList.add("col-4");
+        infoDiv.classList.add("col-6");
         const title = document.createElement("strong");
         title.appendChild(document.createTextNode(`${media.title}`));
         title.classList.add("row", "media-title");

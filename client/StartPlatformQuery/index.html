@@ -39,6 +39,16 @@
             <div class="row">
                 <div class="col-2"></div>
                 <div class="form-check col-2">
+                    <label class="form-check-label" for="media-type">Media Type</label>
+                </div>
+                <div class="form-group query-form col-6">
+                    <select id="media-type" class="custom-select" required>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2"></div>
+                <div class="form-check col-2">
                     <input class="form-check-input" type="radio" name="how-to-query" id="link" value="link" checked>
                     <label class="form-check-label" for="link">Link</label>
                 </div>
@@ -52,39 +62,9 @@
                     <input class="form-check-input" type="radio" name="how-to-query" id="query" value="query">
                     <label class="form-check-label" for="query">Query</label>
                 </div>
-            </div>
-        </form>
-        <br />
-        <form>
-            <div class="row">
-                <div class="col-3"></div>
-                <div class="form-check col-2">
-                    <label class="form-check-label" for="media-type">Media Type</label>
+                <div class="form-group query-form col-6">
+                    <input id="media-query" class="form-control" type="text" required>
                 </div>
-                <div class="form-group query-form col-5">
-                    <select id="media-type" class="custom-select" required>
-                    </select>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-3"></div>
-                <div class="form-check col-2">
-                    <label class="form-check-label" for="media-title">Title</label>
-                </div>
-                <div class="form-group query-form col-5">
-                    <input id="media-title" class="form-control" type="text" required>
-                </div>
-                <div class="col-2"></div>
-            </div>
-            <div class="row">
-                <div class="col-3"></div>
-                <div class="form-check col-2">
-                    <label id="author-input-label" class="form-check-label" for="author">Author</label>
-                </div>
-                <div class="form-group query-form col-5">
-                    <input id="author" class="form-control" type="text">
-                </div>
-                <div class="col-2"></div>
             </div>
         </form>
         <br />

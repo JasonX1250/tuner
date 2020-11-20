@@ -23,19 +23,15 @@ function addStartPlatformLogo() {
 
 function applyPlatformSpecifics() {
     const mediaType = document.getElementById("media-type");
-    const authorLabel = document.getElementById("author-input-label");
     let mediaTypeOptions = [];
-    let authorSynonym = "";
     switch(startPlatform) {
         case "YouTube": {
             mediaTypeOptions = ["Video", "Playlist"];
-            authorSynonym = "Channel";
             break;
         }
 
         case "Spotify": {
             mediaTypeOptions = ["Track", "Album", "Playlist"];
-            authorSynonym = "Artist";
             break;
         }
     }
@@ -45,27 +41,26 @@ function applyPlatformSpecifics() {
         opt.appendChild(document.createTextNode(`${option}`));
         mediaType.appendChild(opt);
     }
-    authorLabel.removeChild(authorLabel.firstChild);
-    authorLabel.appendChild(document.createTextNode(authorSynonym));
 }
 
 async function query() {
     let query = "queryMedia?";
     query += `platform=${startPlatform}`;
+    query += `&type=${document.getElementById("media-type").value}`;
     if (document.getElementById("link").checked) {
         query += "&queryMethod=link";
         query += `&link=${document.getElementById("media-link").value}`;
     } else {
         query += "&queryMethod=query";
-        query += `&title=${document.getElementById("media-title").value}`;
-        query += `&type=${document.getElementById("media-type").value}`;
-        if (document.getElementById("author").value !== null || document.getElementById("author").value !== "") {
-            query += `&author=${document.getElementById("author").value}`;
-        }
+        query += `&q=${document.getElementById("media-query").value}`;
     }
     const response = await fetch(`${url}/${query}`);
     if (response.ok) {
         const data = await response.json();
+        if (data.length === 0) {
+            window.alert("No videos matching query found.");
+            return;
+        }
         window.localStorage.setItem("mediaToConvert", JSON.stringify(data));
         window.location.href = `${url}/startQueryResults`;
     }
