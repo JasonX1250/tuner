@@ -34,8 +34,7 @@ const queryYoutubeQuery = async (q, type) => {
 const queryYoutubeLink = async (link, type) => {
     const results = [];
     let url = "";
-    if (mediaType === "Video") {
-        const results = [];
+    if (type === "Video") {
         let query = "?part=snippet";
         if (link.includes("v=")) {
             query += `&id=${link.substring(link.indexOf("v=") + 2)}`;
@@ -43,7 +42,7 @@ const queryYoutubeLink = async (link, type) => {
             query += `&id=${link.substring(link.indexOf(".be/") + 4)}`;
         }
         url = "https://youtube.googleapis.com/youtube/v3/videos" + query + `&key=${GOOGLE_API_KEY}`;
-    } else if (mediaType === "Playlist") {
+    } else if (type === "Playlist") {
         url = `https://www.googleapis.com/youtube/v3/playlists?part=snippet&id=${link.substring(link.indexOf("list=") + 5)}` + `&key=${GOOGLE_API_KEY}`;
     }
     const response = await fetch(url);
@@ -237,12 +236,12 @@ router.get("/queryMedia", async (req, res) => {
     res.send(results);
 });
 
-router.get("/queryPlaylists", (req, res) => {
-    const platform = req.query.platform;
-    const queryMethod = req.query.queryMethod;
-    console.log(req.query);
-    res.send(ex1);
-});
+// router.get("/queryPlaylists", (req, res) => {
+//     const platform = req.query.platform;
+//     const queryMethod = req.query.queryMethod;
+//     console.log(req.query);
+//     res.send(ex1);
+// });
 
 router.get("/getSavedPlaylists", (req, res) => {
     const userId = req.query.userId;
@@ -261,12 +260,22 @@ router.post("/convertMedia", async (req, res) => {
     if (req.body.endPlatform === YOUTUBE) {
         for (media of mediaToConvert) {
             const converted = await queryYoutubeQuery(media.title.replace(/[^\w\s]/gi, ""), "video");
-            results.push(converted[0]);
+            console.log(JSON.stringify(media));
+            console.log(JSON.stringify(converted));
+            if (mediaToConvert.length === 1) {
+                results = converted;
+            } else {
+                results.push(converted[0]);
+            }
         }
     } else if (req.body.endPlatform === SPOTIFY) {
         for (media of mediaToConvert) {
             const converted = await querySpotifyQuery(media.title.replace(/[^\w\s]/gi, ""), "track");
-            results.push(converted[0]);
+            if (mediaToConvert.length === 1) {
+                results = converted;
+            } else {
+                results.push(converted[0]);
+            }
         }
     }
     res.send(results);
@@ -299,25 +308,25 @@ router.post("/addToPlaylists", (req, res) => {
     res.send(ex);
 });
 
-router.post("/savePlaylist", (req, res) => {
-    const userId = req.body.userId;
-    const auth = req.body.auth;
-    const title = req.body.title;
-    const media = req.body.media;
-    console.log(req.body);
-    res.send({
-        playlistId: "examplePlaylistId"
-    });
-});
+// router.post("/savePlaylist", (req, res) => {
+//     const userId = req.body.userId;
+//     const auth = req.body.auth;
+//     const title = req.body.title;
+//     const media = req.body.media;
+//     console.log(req.body);
+//     res.send({
+//         playlistId: "examplePlaylistId"
+//     });
+// });
 
-router.post("/getAuth", (req, res) => {
-    const accessToken = req.body.accessToken;
-    console.log(req.body);
-    res.send({
-        userId: "exampleUserId",
-        authToken: "exampleAccessToken"
-    });
-});
+// router.post("/getAuth", (req, res) => {
+//     const accessToken = req.body.accessToken;
+//     console.log(req.body);
+//     res.send({
+//         userId: "exampleUserId",
+//         authToken: "exampleAccessToken"
+//     });
+// });
 
 router.post("/login", passport.authenticate('local', {
     sucessRedirect: '/SavedPlaylists',
