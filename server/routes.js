@@ -75,14 +75,20 @@ const querySpotifyQuery = async (q, type) => {
         const data = await response.json();
         for (media of data[`${type}s`].items) {
             let image = "";
+            let artist = "";
             if (type === "album") {
                 image = media.images[0].url;
-            } else {
+                artist = media.artists[0].name;
+            } else if (type === "track") {
                 image = media.album.images[0].url;
+                artist = media.artists[0].name;
+            } else if (type === "playlist") {
+                image = media.images[0].url;
+                artist = media.owner.display_name;
             }
             results.push({
                 title: media.name,
-                author: media.artists[0].name,
+                author: artist,
                 link: media.external_urls.spotify,
                 img: image
             });
