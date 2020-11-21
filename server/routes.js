@@ -176,7 +176,7 @@ const extractMediaFromCollection = async (platform, type, collection) => {
         if (type === "Playlist") {
             url = `https://api.spotify.com/v1/playlists/${collection.link.substring(collection.link.indexOf("playlist/") + 9)}/tracks`;
         } else if (type === "Album") {
-            url = `https://api.spotify.com/v1/playlists/${collection.link.substring(collection.link.indexOf("album/") + 6)}/tracks`;
+            url = `https://api.spotify.com/v1/albums/${collection.link.substring(collection.link.indexOf("album/") + 6)}/tracks`;
         }
         const response = await fetch(url, {
             headers: {
@@ -184,13 +184,22 @@ const extractMediaFromCollection = async (platform, type, collection) => {
                 "Authorization": `Bearer ${access_token}`
             }
         });
-        if (response.ok) {
+        if (response.ok && type === "Playlist") {
             const data = await response.json();
-            for (item of media.items) {
+            for (item of data.items) {
                 media.push({
                     title: item.track.name,
                     author: item.track.artists[0].name,
                     id: item.track.id,
+                });
+            }
+        } else if (response.ok && type === "Album") {
+            const data = await response.json();
+            for (item of data.items) {
+                media.push({
+                    title: item.name,
+                    author: item.artists[0].name,
+                    id: item.id,
                 });
             }
         }
@@ -240,12 +249,12 @@ router.post("/convertMedia", async (req, res) => {
     if (req.body.endPlatform === YOUTUBE) {
         for (media of mediaToConvert) {
             const converted = await queryYoutubeQuery(media.title.replace(/[^\w\s]/gi, ""), "video");
-            results = converted;
+            results.push(converted[0]);
         }
     } else if (req.body.endPlatform === SPOTIFY) {
         for (media of mediaToConvert) {
             const converted = await querySpotifyQuery(media.title.replace(/[^\w\s]/gi, ""), "track");
-            results = converted;
+            results.push(converted[0]);
         }
     }
     res.send(results);
