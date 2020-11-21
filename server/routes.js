@@ -116,14 +116,20 @@ const querySpotifyLink = async (link, type) => {
     if (response.ok) {
         const data = await response.json();
         let image = "";
+        let artist = "";
         if (type === "album") {
             image = data.images[0].url;
-        } else {
+            artist = data.artists[0].name;
+        } else if (type === "track") {
             image = data.album.images[0].url;
+            artist = data.artists[0].name;
+        } else if (type === "playlist") {
+            image = data.images[0].url;
+            artist = data.owner.display_name;
         }
         results.push({
             title: data.name,
-            author: data.artists[0].name,
+            author: artist,
             link: data.external_urls.spotify,
             img: image
         });
