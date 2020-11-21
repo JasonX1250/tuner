@@ -38,6 +38,14 @@ function addPlatformLogos() {
 }
 
 function addConvertedResults() {
+    if (convertedMedia.length === 0) {
+        const result = document.createElement("h2");
+        result.classList.add("text");
+        result.appendChild(document.createTextNode(`No matches found on ${window.localStorage.getItem("endPlatform")}. `));
+        result.appendChild(document.createElement("br"));
+        result.appendChild(document.createTextNode(`Make sure that the title of the media on ${window.localStorage.getItem("startPlatform")} is accurate.`));
+        document.getElementById("converted-results").appendChild(result);
+    }
     for (const media of convertedMedia) {
         // container for each result
         const result = document.createElement("div");
