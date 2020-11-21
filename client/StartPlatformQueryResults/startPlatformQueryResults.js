@@ -7,7 +7,7 @@ window.onload = async () => {
     document.getElementById("go-back-btn").addEventListener("click", () => { window.location.href = `${url}/startQuery`; });
 }
 
-const mediaToConvert = JSON.parse(window.localStorage.getItem("mediaToConvert"));
+const queriedMedia = JSON.parse(window.localStorage.getItem("queriedMedia"));
 
 function addStartPlatformLogo() {
     const startPlatform = window.localStorage.getItem("startPlatform");
@@ -23,20 +23,21 @@ function addStartPlatformLogo() {
 }
 
 function addSearchResults() {
-    for (const media of mediaToConvert) {
+    for (const media of queriedMedia) {
         // container for each result
         const result = document.createElement("div");
         result.classList.add("row", "result");
         // image or thumbnail for each result
         const imgDiv = document.createElement("div");
-        imgDiv.classList.add("col-1");
+        imgDiv.classList.add("col-2", "thumbnail");
         const img = document.createElement("img");
+        img.classList.add("media-img");
         img.src = media.img;
         imgDiv.appendChild(img);
         result.appendChild(imgDiv);
         // general information for each result
         const infoDiv = document.createElement("div");
-        infoDiv.classList.add("col-4");
+        infoDiv.classList.add("col-6");
         const title = document.createElement("strong");
         title.appendChild(document.createTextNode(`${media.title}`));
         title.classList.add("row", "media-title");
@@ -45,13 +46,9 @@ function addSearchResults() {
         author.appendChild(document.createTextNode(`${media.author}`));
         author.classList.add("row");
         infoDiv.appendChild(author);
-        const duration = document.createElement("div");
-        duration.appendChild(document.createTextNode(`${media.duration}`));
-        duration.classList.add("row");
-        infoDiv.appendChild(duration);
         const link = document.createElement("a");
         link.href = `${media.link}`;
-        link.appendChild(document.createTextNode(`${media.link}`));
+        link.appendChild(document.createTextNode(`${media.link.substring(0, 30)}${(media.link.length > 30 ? "..." : "")}`));
         link.classList.add("row");
         infoDiv.appendChild(link);
         result.appendChild(infoDiv);

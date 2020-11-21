@@ -44,3 +44,12 @@ h2 {
     color: white;
     background-color: #5cb85c !important; 
 }
+
+.media-img {
+    width: 100%;
+    height: 100%;
+}
+
+.text {
+    text-align: center;
+}
