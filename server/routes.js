@@ -75,14 +75,20 @@ const querySpotifyQuery = async (q, type) => {
         const data = await response.json();
         for (media of data[`${type}s`].items) {
             let image = "";
+            let artist = "";
             if (type === "album") {
                 image = media.images[0].url;
-            } else {
+                artist = media.artists[0].name;
+            } else if (type === "track") {
                 image = media.album.images[0].url;
+                artist = media.artists[0].name;
+            } else if (type === "playlist") {
+                image = media.images[0].url;
+                artist = media.owner.display_name;
             }
             results.push({
                 title: media.name,
-                author: media.artists[0].name,
+                author: artist,
                 link: media.external_urls.spotify,
                 img: image
             });
@@ -116,14 +122,20 @@ const querySpotifyLink = async (link, type) => {
     if (response.ok) {
         const data = await response.json();
         let image = "";
+        let artist = "";
         if (type === "album") {
             image = data.images[0].url;
-        } else {
+            artist = data.artists[0].name;
+        } else if (type === "track") {
             image = data.album.images[0].url;
+            artist = data.artists[0].name;
+        } else if (type === "playlist") {
+            image = data.images[0].url;
+            artist = data.owner.display_name;
         }
         results.push({
             title: data.name,
-            author: data.artists[0].name,
+            author: artist,
             link: data.external_urls.spotify,
             img: image
         });
@@ -176,7 +188,7 @@ const extractMediaFromCollection = async (platform, type, collection) => {
         if (type === "Playlist") {
             url = `https://api.spotify.com/v1/playlists/${collection.link.substring(collection.link.indexOf("playlist/") + 9)}/tracks`;
         } else if (type === "Album") {
-            url = `https://api.spotify.com/v1/playlists/${collection.link.substring(collection.link.indexOf("album/") + 6)}/tracks`;
+            url = `https://api.spotify.com/v1/albums/${collection.link.substring(collection.link.indexOf("album/") + 6)}/tracks`;
         }
         const response = await fetch(url, {
             headers: {
@@ -184,13 +196,22 @@ const extractMediaFromCollection = async (platform, type, collection) => {
                 "Authorization": `Bearer ${access_token}`
             }
         });
-        if (response.ok) {
+        if (response.ok && type === "Playlist") {
             const data = await response.json();
-            for (item of media.items) {
+            for (item of data.items) {
                 media.push({
                     title: item.track.name,
                     author: item.track.artists[0].name,
                     id: item.track.id,
+                });
+            }
+        } else if (response.ok && type === "Album") {
+            const data = await response.json();
+            for (item of data.items) {
+                media.push({
+                    title: item.name,
+                    author: item.artists[0].name,
+                    id: item.id,
                 });
             }
         }
@@ -240,12 +261,12 @@ router.post("/convertMedia", async (req, res) => {
     if (req.body.endPlatform === YOUTUBE) {
         for (media of mediaToConvert) {
             const converted = await queryYoutubeQuery(media.title.replace(/[^\w\s]/gi, ""), "video");
-            results = converted;
+            results.push(converted[0]);
         }
     } else if (req.body.endPlatform === SPOTIFY) {
         for (media of mediaToConvert) {
             const converted = await querySpotifyQuery(media.title.replace(/[^\w\s]/gi, ""), "track");
-            results = converted;
+            results.push(converted[0]);
         }
     }
     res.send(results);
