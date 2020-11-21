@@ -46,6 +46,7 @@ function addConvertedResults() {
         const imgDiv = document.createElement("div");
         imgDiv.classList.add("col-1");
         const img = document.createElement("img");
+        img.classList.add("media-img");
         img.src = media.img;
         imgDiv.appendChild(img);
         result.appendChild(imgDiv);
@@ -60,13 +61,9 @@ function addConvertedResults() {
         author.appendChild(document.createTextNode(`${media.author}`));
         author.classList.add("row");
         infoDiv.appendChild(author);
-        const duration = document.createElement("div");
-        duration.appendChild(document.createTextNode(`${media.duration}`));
-        duration.classList.add("row");
-        infoDiv.appendChild(duration);
         const link = document.createElement("a");
         link.href = `${media.link}`;
-        link.appendChild(document.createTextNode(`${media.link}`));
+        link.appendChild(document.createTextNode(`${media.link.substring(0, 30)}${(media.link.length > 30 ? "..." : "")}`));
         link.classList.add("row");
         infoDiv.appendChild(link);
         result.appendChild(infoDiv);

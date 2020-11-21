@@ -6,7 +6,7 @@ window.onload = async () => {
 
     // add button event listeners
     document.getElementById("go-back-btn").addEventListener("click", () => {
-        window.history.back();
+        window.location.href = `${url}/startQueryResults`;
     });
 }
 
@@ -49,8 +49,10 @@ async function selectPlatform(platform) {
             "Content-Type": "application/json;charset=utf-8"
         },
         body: JSON.stringify({
-            platform: platform,
-            media: JSON.parse(window.localStorage.getItem("mediaToConvert"))
+            startPlatform: window.localStorage.getItem("startPlatform"),
+            endPlatform: platform,
+            media: JSON.parse(window.localStorage.getItem("mediaToConvert")),
+            type: window.localStorage.getItem("mediaType")
         })
     });
     if (response.ok) {

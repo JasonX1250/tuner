@@ -61,7 +61,8 @@ async function query() {
             window.alert("No videos matching query found.");
             return;
         }
-        window.localStorage.setItem("mediaToConvert", JSON.stringify(data));
+        window.localStorage.setItem("mediaType", document.getElementById("media-type").value);
+        window.localStorage.setItem("queriedMedia", JSON.stringify(data));
         window.location.href = `${url}/startQueryResults`;
     }
 }
