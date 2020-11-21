@@ -231,7 +231,7 @@ router.get("/getSavedPlaylists", (req, res) => {
 
 router.post("/convertMedia", async (req, res) => {
     let mediaToConvert = [];
-    const results = [];
+    let results = [];
     if (req.body.type === "Playlist" || req.body.type === "Album") {
         mediaToConvert = await extractMediaFromCollection(req.body.startPlatform, req.body.type, req.body.media);
     } else {
@@ -240,16 +240,12 @@ router.post("/convertMedia", async (req, res) => {
     if (req.body.endPlatform === YOUTUBE) {
         for (media of mediaToConvert) {
             const converted = await queryYoutubeQuery(media.title.replace(/[^\w\s]/gi, ""), "video");
-            if (converted.length !== 0) {
-                results.push(converted[0]);
-            }
+            results = converted;
         }
     } else if (req.body.endPlatform === SPOTIFY) {
         for (media of mediaToConvert) {
             const converted = await querySpotifyQuery(media.title.replace(/[^\w\s]/gi, ""), "track");
-            if (converted.length !== 0) {
-                results.push(converted[0]);
-            }
+            results = converted;
         }
     }
     res.send(results);
