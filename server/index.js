@@ -23,7 +23,7 @@ app.use("/startQuery", express.static(path.join(__dirname, "../client/StartPlatf
 app.use("/startQueryResults", express.static(path.join(__dirname, "../client/StartPlatformQueryResults")));
 app.use("/selectEndPlatforms", express.static(path.join(__dirname, "../client/SelectEndPlatform")));
 app.use("/convertedMedia", express.static(path.join(__dirname, "../client/EndPlatformConvertedResults")));
-app.use("/playlistQuery", express.static(path.join(__dirname, "../client/SpecifyPlaylistsToAddTo")));
+// app.use("/playlistQuery", express.static(path.join(__dirname, "../client/SpecifyPlaylistsToAddTo")));
 app.use("/addToPlaylists", express.static(path.join(__dirname, "../client/SelectPlaylistsToAddTo")));
 app.use("/addToPlaylistsResults", express.static(path.join(__dirname, "../client/AddToPlaylistResult")));
 app.use("/login", express.static(path.join(__dirname, "../client/Login")));

@@ -2,10 +2,12 @@ const express = require('express');
 var router = express.Router();
 const passport = require('passport');
 const fetch = require('node-fetch');
+const MongoClient = require('mongodb').MongoClient;
 
 const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 const SPOTIFY_CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
 const SPOTIFY_CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
+const MONGODB_URI = process.env.MONGODB_URI;
 const YOUTUBE = "YouTube";
 const SPOTIFY = "Spotify";
 
@@ -218,6 +220,42 @@ const extractMediaFromCollection = async (platform, type, collection) => {
     return media;
 };
 
+const loadDatabase = async (database, collection, query) => {
+    const client = new MongoClient(MONGODB_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    });
+    try {
+        await client.connect();
+        const db = client.db(database);
+        let col = db.collection(collection);
+        const response = await col.find(query).toArray();
+        return response;
+    } catch (err) {
+        console.log(err.stack);
+    } finally {
+        await client.close();
+    }
+};
+
+const insertDatabase = async (database, collection, data) => {
+    const client = new MongoClient(MONGODB_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    });
+    try {
+        await client.connect();
+        const db = client.db(database);
+        let col = db.collection(collection);
+        const response = await col.insertOne(data);
+        return response.insertedCount === 1;
+    } catch (err) {
+        console.log(err.stack);
+    } finally {
+        await client.close();
+    }
+};
+
 router.get("/queryMedia", async (req, res) => {
     let results = [];
     if (req.query.platform === YOUTUBE) {
@@ -236,17 +274,23 @@ router.get("/queryMedia", async (req, res) => {
     res.send(results);
 });
 
-// router.get("/queryPlaylists", (req, res) => {
-//     const platform = req.query.platform;
-//     const queryMethod = req.query.queryMethod;
-//     console.log(req.query);
-//     res.send(ex1);
-// });
-
-router.get("/getSavedPlaylists", (req, res) => {
-    const userId = req.query.userId;
-    console.log(req.query);
-    res.send(ex2);
+router.get("/getSavedPlaylists", async (req, res) => {
+    const playlists = await loadDatabase("UserDB", "playlists", {
+        owner: req.query.userId
+    });
+    const results = [];
+    console.log(playlists);
+    for (playlist of playlists) {
+        results.push({
+            id: playlist._id,
+            title: playlist.title,
+            list: playlist.list,
+            length: playlist.list.length,
+            img: playlist.img,
+            added: playlist.added
+        });
+    }
+    res.send(results);
 });
 
 router.post("/convertMedia", async (req, res) => {
@@ -260,8 +304,6 @@ router.post("/convertMedia", async (req, res) => {
     if (req.body.endPlatform === YOUTUBE) {
         for (media of mediaToConvert) {
             const converted = await queryYoutubeQuery(media.title.replace(/[^\w\s]/gi, ""), "video");
-            console.log(JSON.stringify(media));
-            console.log(JSON.stringify(converted));
             if (mediaToConvert.length === 1) {
                 results = converted;
             } else {
@@ -281,57 +323,45 @@ router.post("/convertMedia", async (req, res) => {
     res.send(results);
 });
 
-router.post("/newPlaylist", (req, res) => {
-    const userId = req.body.userId;
-    const auth = req.body.auth;
-    const platform = req.body.platform;
-    const playlistDetails = req.body.details;
-    console.log(req.body);
-    res.send([{
-        title: "Title YZ0",
-        author: "Author YZ0",
-        duration: "85:00",
-        link: "link.com/yz0"
-    }]);
+router.post("/newPlaylist", async (req, res) => {
+    const date = new Date();
+    const result = await insertDatabase("UserDB", "playlists", {
+        title: req.body.title,
+        list: req.body.playlist,
+        length: req.body.playlist.length,
+        img: req.body.playlist[0].img,
+        owner: req.body.userId,
+        added: (date.getMonth() + 1) + '-' + date.getDate() + '-' + date.getFullYear()
+    });
+    res.send(result);
 });
 
 router.post("/addToPlaylists", (req, res) => {
-    const userId = req.body.userId;
-    const auth = req.body.auth;
-    const media = req.body.media;
+    const results = [];
     const playlists = req.body.playlists;
-    console.log(req.body);
-    const ex = [];
-    for (const p of playlists) {
-        ex.push("success");
+    for (media of req.body.media) {
+        for (playlist of req.body.playlists.list) {
+            playlist.push(media);
+            // send to database
+            // if successfully stored
+            results.push("success");
+            // else
+            // results.push("failure");
+        }
     }
     res.send(ex);
 });
 
-// router.post("/savePlaylist", (req, res) => {
-//     const userId = req.body.userId;
-//     const auth = req.body.auth;
-//     const title = req.body.title;
-//     const media = req.body.media;
-//     console.log(req.body);
-//     res.send({
-//         playlistId: "examplePlaylistId"
-//     });
-// });
+// router.post("/login", passport.authenticate('local', {
+//     sucessRedirect: '/SavedPlaylists',
+//     failureRedirect: '/'
+// }));
 
-// router.post("/getAuth", (req, res) => {
-//     const accessToken = req.body.accessToken;
-//     console.log(req.body);
-//     res.send({
-//         userId: "exampleUserId",
-//         authToken: "exampleAccessToken"
-//     });
-// });
-
-router.post("/login", passport.authenticate('local', {
-    sucessRedirect: '/SavedPlaylists',
-    failureRedirect: '/'
-}));
+router.post("/login", (req, res) => {
+    res.send({
+        userId: "user1"
+    });
+});
 
 router.delete("/deleteSavedPlaylist", (req, res) => {
     const userId = req.body.userId;
