@@ -26,16 +26,9 @@ app.use(passport.session());
 app.use(morgan('dev'));
 
 connectDB();
-const db = mongoose.connection;
 
 
 
-
-app.use(express.json());
-
-var readline = require('readline');
-
-const db = mongoose.connection;
 
 app.use(express.json());
 

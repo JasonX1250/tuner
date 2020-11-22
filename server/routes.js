@@ -361,7 +361,7 @@ router.post("/addToPlaylists", (req, res) => {
 //     });
 // });
 
-<<<<<<< HEAD
+
 router.post("/login", passport.authenticate('local-login', {
 	sucessRedirect : '/SavedPlaylists',
     failureRedirect : '/login'
@@ -375,11 +375,6 @@ router.post("/login", passport.authenticate('local-login', {
 router.post("/register", passport.authenticate('local-register',{
 	sucessRedirect : '/SavedPlaylists',
     failureRedirect : '/register'
-=======
-router.post("/login", passport.authenticate('local', {
-    sucessRedirect: '/SavedPlaylists',
-    failureRedirect: '/'
->>>>>>> d177dca53505254548a5cd2a2016da96b1567258
 }));
 
 router.get('/login/google', passport.authenticate('google', { scope: ["profile","email"] }));
