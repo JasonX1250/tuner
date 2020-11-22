@@ -27,7 +27,6 @@ function loadMenu() {
 
 function loadLogin() {
     const auth = window.localStorage.getItem("authToken");
-    console.log(auth + " auth token");
     // check auth with fetch, add && to if
     const login = document.getElementById("login");
     while (login.hasChildNodes()) {

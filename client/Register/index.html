@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
         integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="stylesheet" href="../menu.css">
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="register.css">
     <script src="../menu.js" defer></script>
-    <script src="login.js" defer></script>
+    <script src="register.js" defer></script>
     <title>Tuner</title>
 </head>
 
@@ -24,13 +24,13 @@
                 <a id="title" href="/"><strong>Tuner</strong></a>
             </div>
             <div class="col-1"></div>
-            <div id="login" class="col-2 dropdown"></div>
+            <div id="register" class="col-2 dropdown"></div>
         </div>
         <br />
         <br />
-        <p><strong>Login</strong></p>
+        <p><strong>Register</strong></p>
         <br />
-        <form action="/login" method="post">
+        <form>
             <div class="row">
                 <div class="col-3"></div>
                 <div class="col-2">
@@ -38,7 +38,7 @@
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <input id="username" class="form-control" type="text" name="username">
+                        <input id="username" class="form-control" type="text">
                     </div>
                 </div>
             </div>
@@ -49,28 +49,21 @@
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <input id="password" class="form-control" type="password" name="password">
+                        <input id="password" class="form-control" type="password">
                     </div>
                 </div>
             </div>
-            <div id="buttons">
-                <div class="col-2"></div>
-                <div class="col-4">
-                    <button type = "submit" id="login-btn" class="btn btn-primary btn-lg btn-block">Login</button>
-                    <button id="register-btn" class="btn btn-info btn-lg btn-block"><a href="/register">Register</a></button>
-                </div>
-                <div class="col-2"></div>
-        </div>
         </form>
         <br />
-            <br />
-            <br />
-            <div class="row">
-                <div class="col-3"></div>
-                <div class="col-3"><a class="btn btn-lg btn-media btn-block text-uppercase btn-outline" href="/login/google" id="logyoutube"><img src="https://img.icons8.com/color/48/000000/google-logo.png"> Login Google/YouTube</a> </div>
-                <div class="col-3"><a class="btn btn-lg btn-media btn-block text-uppercase btn-outline" href="#"><img src="https://img.icons8.com/color/48/000000/spotify--v1.png"> Login Spotify</a> </div>
-                <div class="col-3"></div>
+        <div id="buttons">
+                <div class="col-2"></div>
+                <div class="col-6">
+                    <button id="register-btn" class="btn btn-primary btn-lg btn-block">Register</button>
+                </div>
+                <div class="col-2"></div>
             </div>
+            <br />
+            <br />
         </div>
     </div>
 </body>
