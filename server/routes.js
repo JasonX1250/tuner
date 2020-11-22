@@ -14,6 +14,7 @@ const MONGODB_URI = process.env.MONGODB_URI;
 const YOUTUBE = "YouTube";
 const SPOTIFY = "Spotify";
 
+
 const queryYoutubeQuery = async (q, type) => {
     const results = [];
     const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${q}&type=${type}` + `&key=${GOOGLE_API_KEY}`;

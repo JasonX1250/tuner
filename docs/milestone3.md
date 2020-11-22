@@ -76,6 +76,7 @@ _UserDB.**playlists**(collection)_ :
 - implemented endpoint for saving new playlists to database
 - implemented endpoint for updating playlists in database
 - implemented endpoint for deleting saved playlists from database
+- implemented endpoint for register and login
 
 ### Yaocao Chen
 
