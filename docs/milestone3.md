@@ -72,3 +72,6 @@ _UserDB.**playlists**(collection)_ :
 
 - made some adjustments frontend for receiving data from the server
 - implemented endpoints for querying media for both YouTube and Spotify
+
+### Yaocao Chen
+- help get the authrization from spotify
