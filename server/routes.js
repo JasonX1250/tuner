@@ -2,6 +2,9 @@ const express = require('express');
 var router = express.Router();
 const passport = require('passport');
 const fetch = require('node-fetch');
+const {
+    ObjectId
+} = require('mongodb');
 const MongoClient = require('mongodb').MongoClient;
 
 const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
@@ -256,6 +259,33 @@ const insertDatabase = async (database, collection, data) => {
     }
 };
 
+const deleteDatabase = async (database, collection, userId, playlistId) => {
+    const client = new MongoClient(MONGODB_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    });
+    try {
+        await client.connect();
+        const db = client.db(database);
+        let col = db.collection(collection);
+        console.log(userId);
+        console.log(playlistId);
+        console.log(await col.find({
+            owner: userId,
+            _id: ObjectId(playlistId)
+        }).toArray());
+        const response = await col.deleteOne({
+            owner: userId,
+            _id: ObjectId(playlistId)
+        });
+        return response.deletedCount === 1;
+    } catch (err) {
+        console.log(err.stack);
+    } finally {
+        await client.close();
+    }
+};
+
 router.get("/queryMedia", async (req, res) => {
     let results = [];
     if (req.query.platform === YOUTUBE) {
@@ -333,7 +363,9 @@ router.post("/newPlaylist", async (req, res) => {
         owner: req.body.userId,
         added: (date.getMonth() + 1) + '-' + date.getDate() + '-' + date.getFullYear()
     });
-    res.send(result);
+    res.send({
+        success: result
+    });
 });
 
 router.post("/addToPlaylists", (req, res) => {
@@ -357,18 +389,16 @@ router.post("/addToPlaylists", (req, res) => {
 //     failureRedirect: '/'
 // }));
 
-router.post("/login", (req, res) => {
+router.post("/login", async (req, res) => {
     res.send({
         userId: "user1"
     });
 });
 
-router.delete("/deleteSavedPlaylist", (req, res) => {
-    const userId = req.body.userId;
-    const auth = req.body.auth;
-    const playlistId = req.body.playlistId;
-    console.log(req.body);
-    res.send("success");
+router.delete("/deleteSavedPlaylist", async (req, res) => {
+    res.send({
+        success: await deleteDatabase("UserDB", "playlists", req.body.userId, req.body.playlistId)
+    });
 });
 
 module.exports = router;
