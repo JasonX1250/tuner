@@ -1,6 +1,6 @@
 const availablePlatforms = ["Spotify", "YouTube"];
 // const url = "http://localhost:3000"
-"https://tuner-app.herokuapp.com";
+const url = "https://tuner-app.herokuapp.com";
 
 function openMenu() {
     document.getElementById("menu").style.width = "250px";
