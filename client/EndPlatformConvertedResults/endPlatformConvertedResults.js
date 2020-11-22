@@ -112,6 +112,10 @@ function selectMedia(selectBtn, media) {
 }
 
 function finalizeSelection() {
+    if (window.localStorage.getItem("userId") === null) {
+        window.alert("You must login first.");
+        return;
+    }
     if (selectedConvertedMedia.length >= 1) {
         window.localStorage.setItem("selectedConvertedMedia", JSON.stringify(selectedConvertedMedia));
         window.location.href = `${url}/addToPlaylists`;
@@ -121,6 +125,10 @@ function finalizeSelection() {
 }
 
 async function savePlaylist() {
+    if (window.localStorage.getItem("userId") === null) {
+        window.alert("You must login first.");
+        return;
+    }
     if (selectedConvertedMedia.length < 1) {
         window.alert("You must select at least one piece of media to add to playlists.");
         return;
