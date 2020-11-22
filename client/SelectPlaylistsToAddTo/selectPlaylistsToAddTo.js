@@ -1,6 +1,6 @@
 window.onload = async () => {
     loadMenu();
-    addPlatformLogos();
+    // addPlatformLogos();
     loadLogin();
 
     const response = await fetch(`${url}/getSavedPlaylists?userId=${window.localStorage.getItem("userId")}`);
@@ -14,7 +14,7 @@ window.onload = async () => {
     // add event listener to continue button
     document.getElementById("add-to-playlists-btn").addEventListener("click", finalizeSelection);
     document.getElementById("go-back-btn").addEventListener("click", () => {
-        window.location.href = `${url}/playlistQuery`;
+        window.history.back();
     });
 }
 
@@ -116,6 +116,7 @@ async function finalizeSelection() {
                 "Content-Type": "application/json;charset=utf-8"
             },
             body: JSON.stringify({
+                userId: window.localStorage.getItem("userId"),
                 media: JSON.parse(window.localStorage.getItem("selectedConvertedMedia")),
                 playlists: JSON.parse(window.localStorage.getItem("playlistsToAddTo"))
             })

@@ -15,7 +15,7 @@ window.onload = async () => {
 const platformLogos = document.getElementById("platform-logos");
 let addedToPlaylistsSuccess = false;
 const playlistsAddedTo = JSON.parse(window.localStorage.getItem("playlistsAddedTo"));
-if (playlistsAddedTo.length > 0 && playlistsAddedTo.includes("success")) {
+if (playlistsAddedTo.length > 0 && playlistsAddedTo.includes(true)) {
     addedToPlaylistsSuccess = true;
 } else {
     addedToPlaylistsSuccess = false;
@@ -53,7 +53,7 @@ function showSuccess() {
         let playlistsAdded = "";
         const playlists = JSON.parse(window.localStorage.getItem("playlistsToAddTo"));
         for (let i = 0; i < playlistsAddedTo.length; i++) {
-            if (playlistsAddedTo[i] === "success") {
+            if (playlistsAddedTo[i]) {
                 playlistsAdded += `${playlists[i].title}`;
                 if (i < playlistsAddedTo.length - 1) {
                     playlistsAdded += ", ";
@@ -61,6 +61,7 @@ function showSuccess() {
             }
         }
         document.getElementById("description").appendChild(document.createTextNode(playlistsAdded));
+        document.getElementById("playlists-added-to").appendChild(document.createTextNode("Media successfully added to the following playlists:"))
     } else {
         success.appendChild(document.createTextNode("\u2717 "));
         const text1 = document.createElement("div");
