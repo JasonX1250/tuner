@@ -1,5 +1,4 @@
 "use strict";
-const mongoose = require("mongoose");
 const connectDB = require("../config/mongoConnect");
 connectDB();
 const path = require("path");
@@ -8,13 +7,7 @@ const app = express();
 const expressSession = require('express-session');  // for managing session state
 const passport = require('passport');
 require("../config/passport.js")(passport);
-const User = require('../models/user');
 const router = require("../server/routes");
-
-var fs = require('fs');
-var readline = require('readline');
-
-const db = mongoose.connection;
 
 app.use(express.json());
 
