@@ -1,12 +1,9 @@
 const express = require('express');
-var router = express.Router();
+const router = express.Router();
 const passport = require('passport');
 const fetch = require('node-fetch');
-const {
-    ObjectId
-} = require('mongodb');
+const { ObjectId } = require('mongodb');
 const MongoClient = require('mongodb').MongoClient;
-
 const minicrypt = require('./miniCrypt');
 
 const mc = new minicrypt();
@@ -102,7 +99,7 @@ const querySpotifyQuery = async (q, type) => {
         }
     }
     return results;
-}
+};
 
 const querySpotifyLink = async (link, type) => {
     const access_token = await getSpotifyAccessToken();
@@ -163,7 +160,7 @@ const getSpotifyAccessToken = async () => {
         const access_token = await response.json();
         return access_token["access_token"];
     }
-}
+};
 
 const extractMediaFromCollection = async (platform, type, collection) => {
     const media = [];
@@ -392,22 +389,13 @@ router.post("/addToPlaylists", async (req, res) => {
             owner: req.body.userId,
             _id: ObjectId(playlist.id)
         }, {
-            $set: { list: updatedPlaylist }
+            $set: {
+                list: updatedPlaylist
+            }
         });
         results.push(result);
     }
     res.send(results);
-});
-
-// router.post("/login", passport.authenticate('local', {
-//     sucessRedirect: '/SavedPlaylists',
-//     failureRedirect: '/'
-// }));
-
-router.post("/login", async (req, res) => {
-    res.send({
-        userId: "user1"
-    });
 });
 
 router.delete("/deleteSavedPlaylist", async (req, res) => {
@@ -415,5 +403,56 @@ router.delete("/deleteSavedPlaylist", async (req, res) => {
         success: await deleteDatabase("UserDB", "playlists", req.body.userId, req.body.playlistId)
     });
 });
+
+router.post("/login", async (req, res) => {
+    const users = await loadDatabase("UserDB", "users", {
+        username: req.body.username
+    });
+    if (users.length === 1) {
+        if (mc.check(req.body.password, users[0].salt, users[0].password)) {
+            res.send({ success: true, userId: users[0]._id });
+        } else {
+            res.send({ success: false });
+        }
+    } else {
+        res.send({success: false});
+    }
+});
+
+router.post("/register", async (req, res) => {
+    const users = await loadDatabase("UserDB", "users", {
+        username: req.body.username
+    });
+    if (users.length === 0) {
+        const [salt, hash] = mc.hash(req.body.password);
+        const result = await insertDatabase("UserDB", "users", {
+            username: req.body.username,
+            salt: salt,
+            password: hash
+        });
+        res.send({
+            success: result
+        });
+    } else {
+        res.send({
+            success: false
+        });
+    }
+});
+
+router.get('/login/google', passport.authenticate('google', {
+    scope: ["profile", "email"]
+}));
+
+router.get('/login/google/return', passport.authenticate('google', {
+        failureRedirect: '/login/'
+    }),
+    //otherwise redirects back home since found the right user
+    (req, res) => {
+        console.log(req.user + "user");
+        const accessToken = req.user.google.token;
+        console.log(accessToken + "accessToken");
+        res.redirect("/");
+    });
 
 module.exports = router;

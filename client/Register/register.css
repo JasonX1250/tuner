@@ -1,0 +1,24 @@
+p {
+    text-align: center;
+}
+
+#buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.btn-media {
+	border-radius: 2px;
+    padding: 10px 19px;
+    font-size: 15px;
+    text-transform: capitalize;
+    line-height: 23px
+    color: #545454;
+    background-color: #ffffff;
+    box-shadow: 0 1px 2px 1px #ddd;
+    cursor: pointer
+
+}
+
