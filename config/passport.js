@@ -77,7 +77,7 @@ module.exports = function(passport) {
     {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: 'http://localhost:3000/login/google/return'
+        callbackURL: 'https://tuner-app.herokuapp.com/login/google/return'
     },
     function (request, accessToken, refreshToken, profile, done) 
     { 
