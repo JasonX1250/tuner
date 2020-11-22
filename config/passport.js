@@ -8,7 +8,6 @@ const mc = new miniCrypt();
 
 module.exports = function(passport) {
 
-
 	//set up the local passport for sign in 
     passport.use('local-login', new LocalStrategy({ 
     	usernameField: "username",
@@ -17,9 +16,8 @@ module.exports = function(passport) {
 	    function (username, password, done) {
 	    	console.log("got here local login");
 	    	User.findOne({'local.username' : username}, function(err,user) {
-	    		console.log(username + " : " + password);
-	    		console.log(mc.hash(password));
-				console.log(user);
+	    		console.log("Logging in: " + username + " : " + password);
+				console.log("user :" + user);
 	    		if (err) {
 	    			console.log("error" + err);
 	    		 	throw err;
@@ -39,13 +37,12 @@ module.exports = function(passport) {
 	    	});
 	    }));
 
-    //set up local 
+    //set up local register 
     passport.use('local-register', new LocalStrategy({
     	usernameField: "username",
     	passwordField: "password",
     }, 
     	function (username, password, done) {
-    		console.log("got here register");
     		User.findOne({'local.username' : username}, function(err,user) {
     			if(err) {
     				throw err;
@@ -53,24 +50,20 @@ module.exports = function(passport) {
     			}
     			if (user) {
     				console.log("username already exists");
-    				//check password here
-    				return done(null, false);
+       				return done(null, false);
     			} else {
+    				//new user
     				const newLocalUser = new User();
         			newLocalUser.local.username = username;
-        			const toRet = mc.hash(password);
-        			if(mc.check(password,toRet[0],toRet[1]))
-        				console.log("checked successfully");
-        			// console.log(toRet);
-        			// console.log(mc.hash(password));
-        			newLocalUser.local.hash = toRet[1];
-        			newLocalUser.local.salt = toRet[0];
+        			const hashSalt = mc.hash(password);
+        			newLocalUser.local.hash = hashSalt[1];
+        			newLocalUser.local.salt = hashSalt[0];
         			newLocalUser.save(function(err) {
         				if(err) {
         					throw err;
         				} else {
-        				console.log("saved");
-        				return done(null,newLocalUser);
+	        				console.log("Saved new user: " + newLocalUser);
+	        				return done(null,newLocalUser);
         				}
         			});
     			}
@@ -82,11 +75,9 @@ module.exports = function(passport) {
 	//GOOGLE passport
 	passport.use(new GoogleStrategy(
     {
-    	//
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: 'http://localhost:3000/login/google/return',
-        passReqToCallback   : true
+        callbackURL: 'http://localhost:3000/login/google/return'
     },
     function (request, accessToken, refreshToken, profile, done) 
     { 
@@ -106,7 +97,7 @@ module.exports = function(passport) {
         			if(err) {
         				throw err;
         			} else {
-        				console.log("saved");
+        				console.log("Saved new user: " + newGoogleUser);
         				return done(null,newGoogleUser);
         			}
         		});
@@ -117,13 +108,10 @@ module.exports = function(passport) {
 
     //generating the user id that will be stored in session used to get the entire user with deserialize
 	passport.serializeUser((user, done) => {
-  		done(null, user.id); //should store user id in session automatically
+  		done(null, user.id); 
 	});
 
 	passport.deserializeUser((user, done) => {
 		done(null, user);
-		// User.findById(id, function(err, user)  {
-	 //    	done(err, user);
-	 //  	});
 	});
 }
