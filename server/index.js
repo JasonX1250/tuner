@@ -10,7 +10,6 @@ require("../config/passport.js")(passport);
 const router = require("../server/routes");
 
 app.use(express.json());
-app.disable("etag");
 
 app.use(express.static(path.join(__dirname, "../client")));
 app.use("/startQuery", express.static(path.join(__dirname, "../client/StartPlatformQuery")));
