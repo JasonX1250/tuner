@@ -53,7 +53,7 @@ const queryYoutubeLink = async (link, type) => {
     const response = await fetch(url);
     if (response.ok) {
         const data = await response.json();
-        for (media of data.items) {
+        for (const media of data.items) {
             results.push({
                 title: media.snippet.title,
                 author: media.snippet.channelTitle,
@@ -77,7 +77,7 @@ const querySpotifyQuery = async (q, type) => {
     });
     if (response.ok) {
         const data = await response.json();
-        for (media of data[`${type}s`].items) {
+        for (const media of data[`${type}s`].items) {
             let image = "";
             let artist = "";
             if (type === "album") {
@@ -202,7 +202,7 @@ const extractMediaFromCollection = async (platform, type, collection) => {
         });
         if (response.ok && type === "Playlist") {
             const data = await response.json();
-            for (item of data.items) {
+            for (const item of data.items) {
                 media.push({
                     title: item.track.name,
                     author: item.track.artists[0].name,
@@ -211,7 +211,7 @@ const extractMediaFromCollection = async (platform, type, collection) => {
             }
         } else if (response.ok && type === "Album") {
             const data = await response.json();
-            for (item of data.items) {
+            for (const item of data.items) {
                 media.push({
                     title: item.name,
                     author: item.artists[0].name,
@@ -268,17 +268,29 @@ const deleteDatabase = async (database, collection, userId, playlistId) => {
         await client.connect();
         const db = client.db(database);
         let col = db.collection(collection);
-        console.log(userId);
-        console.log(playlistId);
-        console.log(await col.find({
-            owner: userId,
-            _id: ObjectId(playlistId)
-        }).toArray());
         const response = await col.deleteOne({
             owner: userId,
             _id: ObjectId(playlistId)
         });
         return response.deletedCount === 1;
+    } catch (err) {
+        console.log(err.stack);
+    } finally {
+        await client.close();
+    }
+};
+
+const updateDatabase = async (database, collection, query, update) => {
+    const client = new MongoClient(MONGODB_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    });
+    try {
+        await client.connect();
+        const db = client.db(database);
+        let col = db.collection(collection);
+        const response = await col.updateOne(query, update);
+        return response.modifiedCount === 1;
     } catch (err) {
         console.log(err.stack);
     } finally {
@@ -309,8 +321,7 @@ router.get("/getSavedPlaylists", async (req, res) => {
         owner: req.query.userId
     });
     const results = [];
-    console.log(playlists);
-    for (playlist of playlists) {
+    for (const playlist of playlists) {
         results.push({
             id: playlist._id,
             title: playlist.title,
@@ -332,7 +343,7 @@ router.post("/convertMedia", async (req, res) => {
         mediaToConvert.push(req.body.media);
     }
     if (req.body.endPlatform === YOUTUBE) {
-        for (media of mediaToConvert) {
+        for (const media of mediaToConvert) {
             const converted = await queryYoutubeQuery(media.title.replace(/[^\w\s]/gi, ""), "video");
             if (mediaToConvert.length === 1) {
                 results = converted;
@@ -341,7 +352,7 @@ router.post("/convertMedia", async (req, res) => {
             }
         }
     } else if (req.body.endPlatform === SPOTIFY) {
-        for (media of mediaToConvert) {
+        for (const media of mediaToConvert) {
             const converted = await querySpotifyQuery(media.title.replace(/[^\w\s]/gi, ""), "track");
             if (mediaToConvert.length === 1) {
                 results = converted;
@@ -368,20 +379,22 @@ router.post("/newPlaylist", async (req, res) => {
     });
 });
 
-router.post("/addToPlaylists", (req, res) => {
+router.post("/addToPlaylists", async (req, res) => {
     const results = [];
-    const playlists = req.body.playlists;
-    for (media of req.body.media) {
-        for (playlist of req.body.playlists.list) {
-            playlist.push(media);
-            // send to database
-            // if successfully stored
-            results.push("success");
-            // else
-            // results.push("failure");
+    for (const playlist of req.body.playlists) {
+        const updatedPlaylist = playlist.list;
+        for (const media of req.body.media) {
+            updatedPlaylist.push(media);
         }
+        const result = await updateDatabase("UserDB", "playlists", {
+            owner: req.body.userId,
+            _id: ObjectId(playlist.id)
+        }, {
+            $set: { list: updatedPlaylist }
+        });
+        results.push(result);
     }
-    res.send(ex);
+    res.send(results);
 });
 
 // router.post("/login", passport.authenticate('local', {
