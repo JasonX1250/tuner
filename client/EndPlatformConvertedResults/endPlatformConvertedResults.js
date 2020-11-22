@@ -114,7 +114,7 @@ function selectMedia(selectBtn, media) {
 function finalizeSelection() {
     if (selectedConvertedMedia.length >= 1) {
         window.localStorage.setItem("selectedConvertedMedia", JSON.stringify(selectedConvertedMedia));
-        window.location.href = `${url}/playlistQuery`;
+        window.location.href = `${url}/addToPlaylists`;
     } else {
         window.alert("You must select at least one piece of media to add to playlists.");
     }
@@ -125,21 +125,21 @@ async function savePlaylist() {
         window.alert("You must select at least one piece of media to add to playlists.");
         return;
     }
-    const response = await fetch(`${url}/savePlaylist`, {
+    const response = await fetch(`${url}/newPlaylist`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json;charset=utf-8"
         },
         body: JSON.stringify({
             userId: window.localStorage.getItem("userId"),
-            auth: window.localStorage.getItem("authToken"),
             title: document.getElementById("collection-title").value,
-            media: selectedConvertedMedia,
+            playlist: selectedConvertedMedia,
+
         })
     });
     if (response.ok) {
         const data = await response.json();
-        if (data.playlistId === -1) {
+        if (!data.success) {
             window.alert("Failed to save playlist on Tuner.");
         } else {
             window.alert(`The playlist "${document.getElementById("collection-title").value}" has been successfully saved on Tuner.`)

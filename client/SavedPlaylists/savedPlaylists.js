@@ -22,8 +22,9 @@ function addFoundPlaylists() {
         result.classList.add("row", "result");
         // image or thumbnail for each result
         const imgDiv = document.createElement("div");
-        imgDiv.classList.add("col-1");
+        imgDiv.classList.add("col-2", "thumbnail");
         const img = document.createElement("img");
+        img.classList.add("media-img");
         img.src = p.img;
         imgDiv.appendChild(img);
         result.appendChild(imgDiv);
@@ -34,25 +35,20 @@ function addFoundPlaylists() {
         title.appendChild(document.createTextNode(`${p.title}`));
         title.classList.add("row", "media-title");
         infoDiv.appendChild(title);
-        const author = document.createElement("div");
-        author.appendChild(document.createTextNode(`${p.author}`));
-        author.classList.add("row");
-        infoDiv.appendChild(author);
-        const duration = document.createElement("div");
-        duration.appendChild(document.createTextNode(`${p.duration}`));
-        duration.classList.add("row");
-        infoDiv.appendChild(duration);
-        const link = document.createElement("a");
-        link.href = `${p.link}`;
-        link.appendChild(document.createTextNode(`${p.link}`));
-        link.classList.add("row");
-        infoDiv.appendChild(link);
+        const length = document.createElement("div");
+        length.appendChild(document.createTextNode(`Length: ${p.length}`));
+        length.classList.add("row");
+        infoDiv.appendChild(length);
+        const addedOn = document.createElement("div");
+        addedOn.appendChild(document.createTextNode(`Added On: ${p.added}`));
+        addedOn.classList.add("row");
+        infoDiv.appendChild(addedOn);
         result.appendChild(infoDiv);
         // add buttons for each result
-        const options = ["Convert Platforms", "Add to Playlists", "Delete"];
+        const options = ["Browse", "Delete"];
         for (opt of options) {
             const selectBtnDiv = document.createElement("div");
-            selectBtnDiv.classList.add("col-2");
+            selectBtnDiv.classList.add("col-1", "playlist-buttons");
             const selectBtn = document.createElement("button");
             if (opt === "Delete") {
                 selectBtn.classList.add("btn", "btn-danger");
@@ -61,20 +57,14 @@ function addFoundPlaylists() {
             }
             selectBtn.appendChild(document.createTextNode(opt));
             // add event listeners for each button
-            if (opt === "Convert Platforms") {
+            if (opt === "Browse") {
                 selectBtn.addEventListener("click", () => {
-                    window.localStorage.setItem("startPlatform", p.platform);
-                    window.localStorage.setItem("mediaToConvert", JSON.stringify(p));
-                    window.location.href = `${url}/selectEndPlatforms`;
-                });
-            } else if (opt === "Add to Playlists") {
-                selectBtn.addEventListener("click", () => {
-                    window.localStorage.setItem("endPlatform", p.platform);
-                    window.localStorage.setItem("selectedConvertedMedia", JSON.stringify(p));
-                    window.location.href = `${url}/playlistQuery`;
+                    window.localStorage.setItem("browsePlaylist", JSON.stringify(p.list));
+                    window.location.href = `${url}/browsePlaylist`;
                 });
             } else if (opt === "Delete") {
                 selectBtn.addEventListener("click", async () => {
+                    console.log(JSON.stringify(p));
                     const response = await fetch(`${url}/deleteSavedPlaylist`, {
                         method: "DELETE",
                         headers: {
@@ -82,12 +72,16 @@ function addFoundPlaylists() {
                         },
                         body: JSON.stringify({
                             userId: window.localStorage.getItem("userId"),
-                            auth: window.localStorage.getItem("authToken"),
-                            playlistId: p.playlistId
+                            playlistId: p.id
                         })
                     });
                     if (response.ok) {
-                        window.location.reload();
+                        const data = await response.json();
+                        if (data.success) {
+                            window.location.reload();
+                        } else {
+                            window.alert("Failed to delete playlist.")
+                        }
                     }
                 });
             }

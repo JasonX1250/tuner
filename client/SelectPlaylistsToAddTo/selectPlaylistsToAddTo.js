@@ -1,8 +1,15 @@
 window.onload = async () => {
     loadMenu();
     addPlatformLogos();
-    addFoundPlaylists();
     loadLogin();
+
+    const response = await fetch(`${url}/getSavedPlaylists?userId=${window.localStorage.getItem("userId")}`);
+    console.log(response);
+    if (response.ok) {
+        window.localStorage.setItem("playlistsFound", JSON.stringify(await response.json()));        
+    }
+
+    addFoundPlaylists();
 
     // add event listener to continue button
     document.getElementById("add-to-playlists-btn").addEventListener("click", finalizeSelection);
@@ -11,7 +18,6 @@ window.onload = async () => {
     });
 }
 
-const playlistsFound = JSON.parse(window.localStorage.getItem("playlistsFound"));
 const playlistsToAddTo = [];
 
 function addPlatformLogos() {
@@ -37,37 +43,33 @@ function addPlatformLogos() {
 }
 
 function addFoundPlaylists() {
-    for (const media of playlistsFound) {
+    for (const media of JSON.parse(window.localStorage.getItem("playlistsFound"))) {
         // container for each result
         const result = document.createElement("div");
         result.classList.add("row", "result");
         // image or thumbnail for each result
         const imgDiv = document.createElement("div");
-        imgDiv.classList.add("col-1");
+        imgDiv.classList.add("col-2", "thumbnail");
         const img = document.createElement("img");
+        img.classList.add("media-img");
         img.src = media.img;
         imgDiv.appendChild(img);
         result.appendChild(imgDiv);
         // general information for each result
         const infoDiv = document.createElement("div");
-        infoDiv.classList.add("col-4");
+        infoDiv.classList.add("col-6");
         const title = document.createElement("strong");
         title.appendChild(document.createTextNode(`${media.title}`));
         title.classList.add("row", "media-title");
         infoDiv.appendChild(title);
-        const author = document.createElement("div");
-        author.appendChild(document.createTextNode(`${media.author}`));
-        author.classList.add("row");
-        infoDiv.appendChild(author);
-        const duration = document.createElement("div");
-        duration.appendChild(document.createTextNode(`${media.duration}`));
-        duration.classList.add("row");
-        infoDiv.appendChild(duration);
-        const link = document.createElement("a");
-        link.href = `${media.link}`;
-        link.appendChild(document.createTextNode(`${media.link}`));
-        link.classList.add("row");
-        infoDiv.appendChild(link);
+        const length = document.createElement("div");
+        length.appendChild(document.createTextNode(`Length: ${media.length}`));
+        length.classList.add("row");
+        infoDiv.appendChild(length);
+        const addedOn = document.createElement("div");
+        addedOn.appendChild(document.createTextNode(`Added On: ${media.added}`));
+        addedOn.classList.add("row");
+        infoDiv.appendChild(addedOn);
         result.appendChild(infoDiv);
         // select button for each result
         const selectBtnDiv = document.createElement("div");
@@ -114,10 +116,7 @@ async function finalizeSelection() {
                 "Content-Type": "application/json;charset=utf-8"
             },
             body: JSON.stringify({
-                userId: window.localStorage.getItem("userId"),
-                auth: window.localStorage.getItem("authToken"),
-                platform: JSON.parse(window.localStorage.getItem("endPlatforms")),
-                media: JSON.parse(window.localStorage.getItem("mediaToConvert")),
+                media: JSON.parse(window.localStorage.getItem("selectedConvertedMedia")),
                 playlists: JSON.parse(window.localStorage.getItem("playlistsToAddTo"))
             })
         });
@@ -127,6 +126,6 @@ async function finalizeSelection() {
             window.location.href = `${url}/addToPlaylistsResults`;
         }
     } else {
-        window.alert("You must select at least one piece of media to add to playlists.")
+        window.alert("You must select at least one piece of media to add to playlists.");
     }
 }

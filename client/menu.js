@@ -26,8 +26,7 @@ function loadMenu() {
 }
 
 function loadLogin() {
-    const auth = window.localStorage.getItem("authToken");
-    console.log(auth + " auth token");
+    const auth = window.localStorage.getItem("userId");
     // check auth with fetch, add && to if
     const login = document.getElementById("login");
     while (login.hasChildNodes()) {
@@ -42,7 +41,6 @@ function loadLogin() {
 
         login.appendChild(document.createTextNode("Logout"));
         login.addEventListener("click", () => { 
-            window.localStorage.removeItem("authToken");
             window.localStorage.removeItem("userId");
             window.location.href = "/";
         });

@@ -18,15 +18,15 @@ async function login() {
 
         })
     });
+    // if (response.ok) {
+    //     passport.authenticate('local', {
+    //         successRedirect: `${url}`,
+    //         failureRedirect: '/login'
+    //     });
+    // }
     if (response.ok) {
         const data = await response.json();
         window.localStorage.setItem("userId", data.userId);
-        window.localStorage.setItem("authToken", data.authToken);
-        // window.location.href = `${url}`;
-        passport.authenticate('local', {successRedirect: `${url}`,
-                                   failureRedirect: '/login'})
+        window.location.href = `${url}`;
     }
 }
-
-
-
