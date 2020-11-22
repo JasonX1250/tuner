@@ -3,11 +3,15 @@ window.onload = async () => {
     //loadLogin();
 
     // add event listener to 'Search' button
-    //document.getElementById("login-btn").addEventListener("click", login);
+    document.getElementById("login-btn").addEventListener("click", login);
     //document.getElementById("register-btn").addEventListener("click", register);
 }
 
 async function login() {
+    if (document.getElementById("username").value.length === 0 || document.getElementById("password").value.length === 0)
+    {   
+        alert("User name or password can't be blank");
+    }
     // const response = await fetch(`${url}/login`, {
     //     method: "POST",
     //     headers: {
@@ -28,10 +32,5 @@ async function login() {
     //     // passport.authenticate('local', {successRedirect: `${url}`,
     //     //                            failureRedirect: '/login'});
     // }
-}
-
-
-async function register() {
-    window.location.href = "/register";
 }
 

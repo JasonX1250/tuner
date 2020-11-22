@@ -4,7 +4,8 @@ const connectDB = require("../config/mongoConnect");
 const path = require("path");
 const express = require("express");
 const app = express();
-const morgan = require("morgan");
+const router = require("../server/routes");
+
 const expressSession = require('express-session');  // for managing session state
 const session = {
     secret : process.env.SECRET || 'SECRET', // set this encryption key in Heroku config (never in GitHub)!
@@ -15,22 +16,28 @@ const session = {
 const passport = require('passport');
 require("../config/passport.js")(passport);
 const User = require('../models/user');
-const router = require("../server/routes");
+
 
 var fs = require('fs');
 // var readline = require('readline');
-// app.use(expressSession(session));
+app.use(expressSession(session));
 app.use(express.urlencoded({'extended' : true}));
 app.use(passport.initialize());
 app.use(passport.session());
+
+const morgan = require("morgan");
 app.use(morgan('dev'));
 
 connectDB();
+const db = mongoose.connection;
 
 
 
 
 app.use(express.json());
+
+var readline = require('readline');
+
 
 app.use(express.static(path.join(__dirname, "../client")));
 app.use("/startQuery", express.static(path.join(__dirname, "../client/StartPlatformQuery")));

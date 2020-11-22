@@ -6,6 +6,9 @@ window.onload = async () => {
 }
 
 async function register() {
+    if (document.getElementById("username").value.length === 0 ||
+        document.getElementById("password").value.length === 0 )
+        alert("User name or password can't be blank");
 	const response = await fetch(`${url}/register`, {
 		method: "POST",
         headers: {
@@ -17,14 +20,16 @@ async function register() {
 
         })
     });
-    if (response.ok)
-    {
-    	alert("user already exists");
-    	console.log("user already exists");
-    }
-    else
-    {
-    	window.location.href = `${url}/savedPlaylists`;
-    }
+
+    console.log(response);
+    // if (response.ok)
+    // {
+    //     console.log(response.body);
+    // 	alert("user already exists");
+    // }
+    // else
+    // {
+    // 	window.location.href = `${url}/savedPlaylists`;
+    // }
   
 }

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+require("../config/passport.js")(passport);
 const fetch = require('node-fetch');
 
 
@@ -363,19 +364,35 @@ router.post("/addToPlaylists", (req, res) => {
 
 
 router.post("/login", passport.authenticate('local-login', {
-	sucessRedirect : '/SavedPlaylists',
     failureRedirect : '/login'
 	}), (req,res) => {
-        const userId = req.user.local.username;
-        console.log(req.user.local.username + " user");
-        res.redirect('/SavedPlaylists');
+        const userId = req.user._id;
+        console.log(req.user._id + " userId");
+        res.redirect('/');
     }
 );
 
 router.post("/register", passport.authenticate('local-register',{
-	sucessRedirect : '/SavedPlaylists',
-    failureRedirect : '/register'
-}));
+    failureRedirect : '/register',
+    sucessRedirect : '/'
+    }), (req,res) => {
+        const userId = req.user._id;
+        console.log(req.user._id + " userId");
+    }
+);
+
+// router.post('/register',
+//      (req, res) => {
+//          const username = req.body['username'];
+//          const password = req.body['password'];
+//          console.log(username);
+//          // if (addUser(username, password)) {
+//          // res.redirect('/login');
+//          // } else {
+//          // res.redirect('/register');
+//          // }
+//          res.end();
+//      });
 
 router.get('/login/google', passport.authenticate('google', { scope: ["profile","email"] }));
 
@@ -385,7 +402,7 @@ router.get('/login/google/return', passport.authenticate('google', { failureRedi
 		console.log(req.user + "user");
 		const accessToken = req.user.google.token;
 		console.log(accessToken + "accessToken");
-    	res.redirect("/");
+    	res.redirect("/getSavedPlaylists");
 });
 
 router.delete("/deleteSavedPlaylist", (req, res) => {
@@ -395,5 +412,14 @@ router.delete("/deleteSavedPlaylist", (req, res) => {
     console.log(req.body);
     res.send("success");
 });
+
+
+function loggedIn(req, res, next) {
+    if (req.user) {
+        next();
+    } else {
+        res.redirect('/login');
+    }
+}
 
 module.exports = router;
