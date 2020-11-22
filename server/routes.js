@@ -7,6 +7,9 @@ const {
 } = require('mongodb');
 const MongoClient = require('mongodb').MongoClient;
 
+const minicrypt = require('./miniCrypt');
+
+const mc = new minicrypt();
 const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 const SPOTIFY_CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
 const SPOTIFY_CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
@@ -369,7 +372,6 @@ router.post("/newPlaylist", async (req, res) => {
     const result = await insertDatabase("UserDB", "playlists", {
         title: req.body.title,
         list: req.body.playlist,
-        length: req.body.playlist.length,
         img: req.body.playlist[0].img,
         owner: req.body.userId,
         added: (date.getMonth() + 1) + '-' + date.getDate() + '-' + date.getFullYear()
