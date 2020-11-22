@@ -4,7 +4,6 @@ window.onload = async () => {
     loadLogin();
 
     const response = await fetch(`${url}/getSavedPlaylists?userId=${window.localStorage.getItem("userId")}`);
-    console.log(response);
     if (response.ok) {
         window.localStorage.setItem("playlistsFound", JSON.stringify(await response.json()));        
     }

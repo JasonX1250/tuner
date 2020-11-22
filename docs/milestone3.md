@@ -2,7 +2,7 @@
 
 ## Back-end(MongoDB/mongoose)
 
-### MongoDB Collections for Tuner:
+### MongoDB Collections for Tuner
 
 _UserDB.**users**(collection)_ :
 
@@ -70,5 +70,9 @@ _UserDB.**playlists**(collection)_ :
 
 ### Jason
 
-- made some adjustments frontend for receiving data from the server
+- made some adjustments and fixed bugs in frontend for receiving data from the server
 - implemented endpoints for querying media for both YouTube and Spotify
+- implemented endpoints for converting media for both YouTube and Spotify
+- implemented endpoint for saving new playlists to database
+- implemented endpoint for updating playlists in database
+- implemented endpoint for deleting saved playlists from database
