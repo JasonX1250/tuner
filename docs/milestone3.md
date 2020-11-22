@@ -1,58 +1,43 @@
 # Milestone 3
 
-## Back-end(MongoDB/mongoose)
+## Database Implementation
 
-### MongoDB Collections for Tuner
+### *UserDB.users*
 
-_UserDB.**users**(collection)_ :
+- **_id : ObjectId** - distinct ID user recieves when registering for an account and added to the database
+- **username : String** - username used for login
+- **salt : String** - salt hash used for authenticating login
+- **password : String** - password hash used for authenticating login
+- *Example*: {  
+  ***_id***: ObjectId("5fba22f39d1f5851a05db70c"),  
+  ***username***: "user",  
+  ***salt***: "61f176b0b0ea106b99388a49638e97ac",  
+  ***password***: "4103d794b31b7b8ed46f8efed20a871600d8488bd7cc8f384a2 . . ." }
 
-- **_local : {_**
+### *UserDB.playlists*
 
-  - **_\_id : ObjectId_** _(Distinct id user recieves when authed into the db used to identify the user during passport.deserializeUser)_
-
-  - **_username : String(unique)_** _(Username for local authorization)_
-
-  - **_hash : String_** _(local pw hash)_
-
-  - **_salt : String_** _(local pw salt)_
-
-- **_google : {_**
-
-  - **_id: String_** _(googleId from GoogleStrat of the user used to fetch YouTube playlists -- need the correct scope)_
-
-  - **_channel: String(link)_** _(Will be used to store the channel of the user for easy access_ **CURRENTLY UNACCESSABLE due to verification issues**
-
-  - **_token: String_** _(authorization token for google)_
-
-  - **_refreshToken: String_**} _(used to get new auth token when regular one expires)_
-
-- **_spotify : {_**
-
-  - **_id: String(unique)_** _(spotifyId)_
-
-  - **_token: String_** _(authorization token for spotify)_
-
-  - **_refreshToken: String_**} _(used to get new auth token when regular one expires)_
-
-_UserDB.**playlists**(collection)_ :
-
-- **_title: String_** _(title of the playlist)_
-
-- **_user: Ref to UserSchema_** _(every playlist belongs to a user, reference user by id)_
-
-- **_author: String_** _(channel/creator/artist)_
-
-- **_link: String(unique)_** _(link to playlist)_
-
-- **_platform: String_** _(which platform playlist is on)_
-
-- **_media : {_** _(list of media)_
-
-  - **_title: String_** _(title of the media)_
-
-  - **_author: String_** _(artist of the media)_
-
-  - **_link: String(unique)}_** _(link to playlist)_
+- **_id : String** - distinct ID of the playlist
+- **title : String** - title of the playlist
+- **list : Media[]** - array of media within the playlist
+  - **title : String** - title of the media
+  - **author : String** - author of the media
+  - **link : String** - url link to the media
+  - **img : String** - url for the thumnail of the media
+- **img : String** - url for the thumbnail of the playlist
+- **owner : String** - Id pertaining to the user that created the playlist
+- **added : String** - string representing the date that the playlist was created on
+- *Example*: {  
+  ***_id***: ObjectId("5fba232e9d1f5851a05db70d"),  
+  ***title***: "Playlist 1",  
+  ***list***: *Array*,  
+    &nbsp;&nbsp;&nbsp;&nbsp;0: *Object*  
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;***title***: "Candy Paint",  
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;***author***: "Post Malone",  
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;***link***: "https://open.spotify.com/track/32lItqlMi4LBhb4k0BaSaC",  
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;***img***: "https://i.scdn.co/image/ab67616d0000b273b1c4b76e23414c9f20242268"  
+  ***img***: "https://i.scdn.co/image/ab67616d0000b273b1c4b76e23414c9f20242268",  
+  ***owner***: "5fba22f39d1f5851a05db70c",  
+  ***added***: "11-22-2020" }
 
 ## Division of Labor
 
@@ -77,6 +62,7 @@ _UserDB.**playlists**(collection)_ :
 - implemented endpoint for updating playlists in database
 - implemented endpoint for deleting saved playlists from database
 - implemented endpoint for register and login
+- updated documentation of database implementation/schema
 
 ### Yaocao Chen
 
