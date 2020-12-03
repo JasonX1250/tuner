@@ -8,125 +8,114 @@ The tuner app can be found at <https://tuner-app.herokuapp.com/>
 
 ### GET Requests
 
-> ***queryMedia***  
+### GET Methods
+
+***queryMedia***  
 Returns a list of media from the specified platform matching the given query parameters
 
-| Parameter | Description |
-|-----------|-------------|
-| platform | Target platform to query media from |
-| queryMethod | Method used to query media [ *link*, *query* ] |
-| query | Parameters used to query media based on queryMethod |
+| Parameter   | Description                                                            |
+|-------------|------------------------------------------------------------------------|
+| platform    | Target platform to query media from                                    |
+| type        | Type of media to query for                                             |
+| queryMethod | Method used to query media [ *link*, *query* ]                         |
+| q           | Title of the media to query for (used only when queryMethod = *query*) |
+| link        | Link to the media to query for (used only when queryMethod = *link*)   |
 
-- **query** fields when **queryMethod** = *link*
+> Example: /queryMedia?platform=YouTube&type=Video&queryMethod=query&title=Silence  
+  Returns: `[{ title: "Marshmello ft. Khalid - Silence (Official Lyric Video)", author: "Marshmello", link: "https://www.youtube.com/watch?v=tk36ovCMsU8", img: "https://i.ytimg.com/vi/tk36ovCMsU8/default.jpg" }, ... ]`
 
-  - *link* - String specifying link to media on specified platform
-
-- **query** fields when **queryMethod** = *query*
-
-  - *title* - String specifying the title of media to query for
-  - *type* - String specifying type of media to query for
-  - *author* (optional) - String specifying author of media to query for
-
-Example: /queryMedia?platform=YouTube&queryMethod=query&title=exampleTitle&type=video
-
-> ***queryPlaylists***  
-Returns a list of playlists from the specified platform matching the given query parameters
-
-| Parameter | Description |
-|-----------|-------------|
-| platform | Target platform to query for playlists on |
-| queryMethod | Method used to query for playlists [ *find*, *link* ] |
-| query | Parameters used to query playlists based on queryMethod |
-
-- **query** can be left empty when **queryMethod** = *find*
-- **query** fields when **queryMethod** = *link*
-  - *link* (String) - Link to playlist on specified platform
-
-Example: /queryPlaylists?platform=Spotify&queryMethod=link&link=exampleLink
-
-> ***getSavedPlaylists***  
+***getSavedPlaylists***  
 Returns a list of saved collections of media under the user's account
 
-| Parameter | Description |
-|-----------|-------------|
-| userId | Id used to specify the user |
+| Parameter | Description                 |
+|-----------|-----------------------------|
+| userId    | Id used to specify the user |
 
-Exampe: /getSavedPlaylists?userID=exampleID
+> Example: /getSavedPlaylists?userID=exampleUserId  
+  Returns: `[{ id: "5fb9b325c9300125243fab0f", title: "Playlist 1", list: [{title: "Candy Paint", author: "Post Malone", link: "https://open.spotify.com/track/32lItqlMi4LBhb4k0BaSaC", img: "https://i.scdn.co/image/ab67616d0000b273b1c4b76e23414c9f20242268"}, { title: "Candy Paint (feat. Bun B)", author: "Kodak Black", link: "https://open.spotify.com/track/5Su82DCebDzhL88yWyUasx", img: "https://i.scdn.co/image/ab67616d0000b2731541a676423805fc68ff3e66"}], length: 2, img: "https://i.scdn.co/image/ab67616d0000b273b1c4b76e23414c9f20242268", added: "11-21-2020" }, ... ]`
 
-### POST Requests
+### POST Methods
 
-> ***convertMedia***  
+***convertMedia***  
 Returns a list of media found on the target platform matching the given input media
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| platform | String | Target platform to convert media to |
-| media | Array[Object] | List of media to convert to the specified platform |
+| Parameter     | Type          | Description                                        |
+|---------------|---------------|----------------------------------------------------|
+| startPlatform | String        | Platform to convert media from                     |
+| endPlatform   | String        | Platform to convert media to                       |
+| type          | String        | Type of the media to convert                       |
+| media         | Array[Object] | List of media to convert to the specified platform |
 
 - **media** object fields
   - *title* - String specifying the title of the media
   - *author* - String specifying the author of the media
-  - *duration* - String specifying the duration of the media
+  - *link* - String specifying the link to the media on the starting platform
+  - *img* - String specifiying the link to the img/thumbnail of the media
 
-> ***newPlaylist***  
-Creates a new playlist on the specified platform and returns the link associated with it
+> Example: /convertMedia with body: `{ startPlatform: "Spotify", endPlatform: "YouTube", type: "Track", media: {"title":"Silence","author":"Marshmello","link":"https://open.spotify.com/track/7vGuf3Y35N4wmASOKLUVVU","img":"https://i.scdn.co/image/ab67616d0000b273f33ba583059dc2f7d08bf2b8"}`  
+  Returns: `[ {"title":"Marshmello ft. Khalid - Silence (Official Lyric Video)","author":"Marshmello","link":"https://youtube.com/watch?v=tk36ovCMsU8","img":"https://i.ytimg.com/vi/tk36ovCMsU8/default.jpg"},{"title":"Marshmello - Silence (Lyrics) ft. Khalid","author":"7clouds","link":"https://youtube.com/watch?v=4oXgCJf4hf8","img":"https://i.ytimg.com/vi/4oXgCJf4hf8/default.jpg"},{"title":"Marshmello - Silence Ft. Khalid (Official Music Video)","author":"Marshmello","link":"https://youtube.com/watch?v=Tx1sqYc3qas","img":"https://i.ytimg.com/vi/Tx1sqYc3qas/default.jpg"}, ... ]`
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| userId | String | Id used to specify the user |
-| auth | String | Authetication for verifying the user |
-| platform | String | Target platform to create the new playlist on |
-| details | Object | Parameters used for creating the new playlist |
+***newPlaylist***  
+Creates a new playlist saved under the user's account on the application and returns the status of whether the media was successfully added to each playlist
 
-- **details** fields
-  - *title* - String specifying the title of the playlist to query for
-  - *private* - Boolean specifying whether the new playlist will be private ( *true* ) or public ( *false* )
+| Parameter | Type          | Description                                     |
+|-----------|---------------|-------------------------------------------------|
+| userId    | String        | Id of the user to save the playlist for         |
+| title     | String        | Name of the new playlist to be saved as         |
+| playlist  | Array[Object] | Collection of media to save in the new playlist |
 
-> ***addToPlaylists***  
-Adds the specified media to the target playlists and returns a list of Strings (*success* or *failure*) indicating the status of adding media to each playlist
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| userId | String | Id used to specify the user |
-| auth | String | Authentication for verifying the user |
-| platform | String | Platform that the playlists are on |
-| media | Array[String] | List of links to media to be added to playlists |
-| playlists | Array[String] | List of links to playlists to add the media to |
-
-> ***savePlaylist***  
-Saves the collection of converted media to user's account and returns a string representing the Id of the saved playlist (-1 if failed to saved playlist)
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| userId | String | Id used to specify the user |
-| auth | String | Authetication for verifying the user |
-| title | String | Name for the collection of media to save |
-| media | Array[Object] | List of media to be saved as a collection under the user's account |
-
-- **media** object fields
+- **playlist** object fields
   - *title* - String specifying the title of the media
   - *author* - String specifying the author of the media
-  - *duration* - String specifying the duration of the media
-  - *link* - String specifying the link for the media
+  - *link* - String specifying the link to the media on the starting platform
+  - *img* - String specifiying the link to the img/thumbnail of the media
 
-> ***login***  
-Autheticate the user with the given credentials and returns a userId and accessToken for the account upon success.
+> Example: /newPlaylist with body: `{ userId: "5fba22f39d1f5851a05db70c", title: "New Playlist", playlist: [ {"title":"Marshmello ft. Khalid - Silence (Official Lyric Video)","author":"Marshmello","link":"https://youtube.com/watch?v=tk36ovCMsU8","img":"https://i.ytimg.com/vi/tk36ovCMsU8/default.jpg"} ]}`  
+  Retuns: `{ success: true }`
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| username | String | Username for the account |
-| password | String | Password for the account |
+***addToPlaylists***  
+Adds the chosen pieces of media to specified playlists and returns the status of whether the media was successfully added to each playlist
 
-### DELETE Requests
+| Parameter | Type          | Description                                               |
+|-----------|---------------|-----------------------------------------------------------|
+| userId    | String        | Id of the user who wants to save media to their playlists |
+| media     | Array[Object] | Collection of media to add to their existing playlists    |
+| playlists | Array[Object] | Collection of user's playlists to add the media to        |
 
-> ***deleteSavedPlaylist***  
-Deletes the specified playlist from the user's collection of saved playlists
+> Example: /addToPlaylists with body: `{ userId: "5fba22f39d1f5851a05db70c", media: [{"title":"Marshmello ft. Khalid - Silence (Official Lyric Video)","author":"Marshmello","link":"https://youtube.com/watch?v=tk36ovCMsU8","img":"https://i.ytimg.com/vi/tk36ovCMsU8/default.jpg"}], playlists: [{"id":"5fc867d5f6a955000483c14c","title":"Playlist 1","list":[{"title":"Marshmello ft. Khalid - Silence (Official Lyric Video)","author":"Marshmello","link":"https://youtube.com/watch?v=tk36ovCMsU8","img":"https://i.ytimg.com/vi/tk36ovCMsU8/default.jpg"}],"length":1,"img":"https://i.ytimg.com/vi/tk36ovCMsU8/default.jpg","added":"12-3-2020"}] }`  
+  Returns: `{ success: true }`
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| userId | String | Id used to specify the user |
-| auth | String | Authetication for verifying the user |
-| playlistId | String | Id of the playlist to delete |
+***login***  
+Returns the status of login given user's credential and a valid userId upon successful authentication
+
+| Parameter | Type   | Description                    |
+|-----------|--------|--------------------------------|
+| username  | String | username for login credentials |
+| password  | String | password for login credentials |
+
+> Example: /login with body: `{ username: user, password: pass}`  
+  Returns: `{ success: true, userId: "5fba1bc35bc1152820059b19" }`
+
+***register***  
+Returns the status of registering an account for the user with their credentials
+
+| Parameter | Type   | Description                    |
+|-----------|--------|--------------------------------|
+| username  | String | username for login credentials |
+| password  | String | password for login credentials |
+
+> Example: /login with body: `{ username: newUser, password: examplePassword }`  
+  Returns: `{ success: true }`
+
+### DELETE Methods
+
+***deleteSavedPlaylist***  
+Deletes the specified playlist from the user's collection of saved playlists and returns the status of whether the playlist was succesfully deleted
+
+| Parameter  | Type   | Description                                                              |
+|------------|--------|--------------------------------------------------------------------------|
+| userId     | String | Id of the user that wants to delete a playlist saved under their account |
+| playlistId | String | Id of the playlist to be deleted                                         |
 
 ## Examples of CRUD Operations
 
@@ -167,10 +156,9 @@ This image shows the result of POST request to the `/addToPlaylists` endpoint. I
 
 - Get the authorization from Spotify web api
 
-
 ### Alex
 
-- implemented some basic scripts 
+- implemented some basic scripts
 - login page
-- implemented google authentication 
-- added google oAuth client + authorized 
+- implemented google authentication
+- added google oAuth client + authorized
