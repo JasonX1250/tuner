@@ -10,10 +10,13 @@ window.onload = async () => {
                 window.alert("Empty fields not allowed.");
         }
     });
+    document.getElementById("back-btn").addEventListener("click", () => {
+        window.location.href = `${url}/login`;
+    });
 }
 
 async function register() {
-    const response = await fetch(`${url}/register`, {
+    const response = await fetch(`${url}/registerUser`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json;charset=utf-8"
