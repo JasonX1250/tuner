@@ -71,7 +71,7 @@ After having selected playlists to add the converted media to, from the previous
 ![AddToPlaylistResult](FinalUiScreenshots/AddToPlaylistResult.png)
 
 ***Login***  
-Users can access their account by entering their credentials into the `username` and `password` fields and selecting the `Login` button. Upon successful authentication, users will be redirected to the *Home* page and now have access to additional features, including viewing and modifying saved playlists. Users can also choose to register for an account on the application by selecting the `Register` button.
+Users can access their account by entering their credentials into the `username` and `password` fields and selecting the `Login` button. Upon successful authentication, users will be redirected to the *Home* page and now have access to additional features, including viewing and modifying saved playlists. Otherwise, an alert will notify the user that the provided credentials are incorrect. Users can also choose to register for an account on the application by selecting the `Register` button.
 
 ![Login](FinalUiScreenshots/Login.png)
 
