@@ -283,6 +283,7 @@ With proper authentication/authorization, users should now be able to see the **
     - AddToPlaylistResult
     - SavedPlaylists
     - BrowsePlaylist
+    - Login
 - Backend
   - Implemented API endpoints and their respective helper functions
     - queryMedia
@@ -315,29 +316,28 @@ With proper authentication/authorization, users should now be able to see the **
   - Implemented API endpoints
     - login/google
     - login/google/return
+    - Authorized application for usage of YouTube's Data API
+    - Authorized application with correct redirect urls for google sign in
+    - Passport strategies for local/google sign in
   - Database
     - Initial set up of the ***UsersDB*** database, the ***users*** and ***playlists*** collections, and data models on MongoDB Atlas
     - Created credentials for database users
     - Created structure to allow for multiple platform accounts
   - Restructured src code for server routing for clarity (routes.js and index.js)
-  - Authorized application for usage of YouTube's Data API
-  - Authorized application with correct redirect urls for google sign in
-  - Passport strategies for local/google sign in 
-  - Milestone 3 schema design and writeup 
+  - Documentation
+    - Milestone 3 schema design and writeup
 
 ### Yaocao Chen
 
 - Backend
   - Authorized application for usage of Spotify's Web API
 - Frontend
-   -Implemented user interface views
+  - Implemented user interface views
     - Login
     - Register
 - Documentation
   - setup
   - milestone 1
-   
- 
 
 ## **Conclusion**
 
