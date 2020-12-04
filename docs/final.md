@@ -28,18 +28,67 @@ The idea of the *Tuner* application is to provide users with a convenient way to
 
 The following depict the views for the user interface. The files for each view is located in the `client` directory in their respective folders (e.g. `Login` view in the `Login` folder of the `client` directory), except for the `Home` page view and the side menu bar (which are located in the `client` directory).
 
+Every view contains a header where the `☰ Menu` toggle button is located. It also contains the application's name, `Tuner`, which can be clicked to redirect the user back to the Home/landing page of the site. On the right side of the header is the `Login/Logout` button that will allow users to log into or out of their accounts, depending whether they are already logged in.
+
 ***Menu***  
+Users can navigate to the available platforms (currently only YouTube and Spotify) to start searching for a specific piece of media to convert. The menu side bar will be hidden when collapsed, but will be visible on the left hand side of the application when it is extended into the view. The menu view can be toggled on and off with the `☰ Menu` icon. When a user is logged in, an additional `Saved Playlists` tab will be available, which will redirect the user to another page where they can view their saved playlists.
+
+![Menu](FinalUiScreenshots/Menu.png)
+
 ***Home***  
+The *Home* view is the landing page of the application, where users will be directed to when navigating to the base url of the site. It contains a welcome message, as well as simple a simple overview and instructions for using the *Tuner* application.
+
+![Home](FinalUiScreenshots/Home.png)
+
 ***StartPlatformQuery***  
+The *StartPlatformQuery* view allows users to query for media on the starting platform that they intially selected from the *Menu*. Users can choose either to query the media they want to convert via link or via searching by its title. Users also have to set the media type they want to query for (options dependent on the selected platform). After entering the necessary query parameters, users can proceed by clicking the `Search` button. The image below depicts when `Spotify` is selected as the starting platform.
+
+![StartPlatformQuery](FinalUiScreenshots/StartPlatformQuery.png)
+
 ***StartPlatformQueryResults***  
+After searching for media to convert from the *StartPlatformQuery* page, users will then be brought to the *StartPlatformQueryResults* view that displays the results of the query. Here, users can view information concerning each result and `Select` one to proceed with converting to another platform. Users can also choose to `Go Back` to the previous *StartPlatformQuery* page.
+
+![StartPlatformQueryResults](FinalUiScreenshots/StartPlatformQueryResults.png)
+
 ***SelectEndPlatform***  
+After selecting a result, from the previous *StartPlatformQueryResults* page, to proceed with, users will then be directed to the *SelectEndPlatform* view. Here, users will select a different platform to convert their selected media to. Users can also choose to `Go Back` to the previous *StartPlatformQueryResults* page.
+
+![SelectEndPlatform](FinalUiScreenshots/SelectEndPlatform.png)
+
 ***EndPlatformConvertedResults***  
+After having selected an end platform to convert their selected media to, from the previous *SelectEndPlatform* page, users will then be directed to the *EndPlatformConvertedResults* view. Here, users will be presented with results, that are similar or related to their selected media, found on the specified end platform. Information concerning each result will be available for the user to view, including the title, author/creator, and link. Each result can be selected to be added to a new playlist with a specified title or an existing playlist saved under the user's account. To save the selected media to a playlist, the user must be logged into their account. Users can also choose to `Go Back` to the previous *SelectEndPlatform* page.
+
+![EndPlatformConvertedResults](FinalUiScreenshots/EndPlatformConvertedResults.png)
+
 ***SelectPlaylistsToAddTo***  
+After having selected at least one piece of media to add to an existing playlist saved under the user's account, users will then be directed to the *SelectPlaylistsToAddTo* view. Here, users will be presented with information pertaining to the playlists saved under their accounts, including playlist's title, length, and the date it was added to the user's account. Users can select playlists to have their converted media added to and proceed by clicking the `Add To Selected Playlists` button. Users can also choose to `Go Back` to the previous *EndPlatformConvertedResults* page.
+
+![SelectPlaylistsToAddTo](FinalUiScreenshots/SelectPlaylistsToAddTo.png)
+
 ***AddToPlaylistResult***  
+After having selected playlists to add the converted media to, from the previous *SelectPlaylistsToAddTo* page, users will then be directed to the *AddToPlaylistResult* view. Here, users can see the status for whether the converted media was successfully added to each playlist. Users can then choose to either search for other media to convert on the same starting platform via the `Convert Other Media` button or to `Go Back` to the previous *SelectPlaylistsToAddTo* page.
+
+![AddToPlaylistResult](FinalUiScreenshots/AddToPlaylistResult.png)
+
 ***Login***  
+Users can access their account by entering their credentials into the `username` and `password` fields and selecting the `Login` button. Upon successful authentication, users will be redirected to the *Home* page and now have access to additional features, including viewing and modifying saved playlists. Users can also choose to register for an account on the application by selecting the `Register` button.
+
+![Login](FinalUiScreenshots/Login.png)
+
 ***Register***  
+Users can register for an account by entering their proposed *username* and *password* in their respective fields and confirming with the `Register` button. Upon successful registration, an alert will pop up telling the user that their account has successfully been created and the user will be redirected to the *Login* page. Users can also choose to `Go Back` to the previous *Login* page.
+
+![Register](FinalUiScreenshots/Register.png)
+
 ***SavedPlaylists***  
+After the user has logged into their account, they can access the *SavedPlaylists* view via the `Saved Playlists` tab in the *Menu*. Here, users can view information pertaining to each playlist saved under their account, including the playlist's title, length, and the date it was added to the user's account. Users can also `Browse` the media contained within a playlist. Users can also choose to `Delete` a saved playlist from their account.
+
+![SavedPlaylists](FinalUiScreenshots/SavedPlaylists.png)
+
 ***BrowsePlaylist***  
+After selecting to browse the content within a specific playlist, from the previous *SavedPlaylists* page, users can view information concerning each piece of media within the selected playlist. Here, users can view the title, author/creator, and link to each piece of media within the playlist. Users can also choose to `Go Back` to the previous *SavedPlaylists* page.
+
+![BrowsePlaylist](FinalUiScreenshots/BrowsePlaylist.png)
 
 ## **API**
 
