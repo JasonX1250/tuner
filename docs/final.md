@@ -309,8 +309,8 @@ With proper authentication/authorization, users should now be able to see the **
 
 - Frontend
   - Implemented user interface views
-    - Login
-    - Register
+    - Login Page
+    - Register Page
 - Backend
   - Implemented API endpoints
     - login/google
@@ -318,8 +318,12 @@ With proper authentication/authorization, users should now be able to see the **
   - Database
     - Initial set up of the ***UsersDB*** database, the ***users*** and ***playlists*** collections, and data models on MongoDB Atlas
     - Created credentials for database users
+    - Created structure to allow for multiple platform accounts
   - Restructured src code for server routing for clarity (routes.js and index.js)
   - Authorized application for usage of YouTube's Data API
+  - Authorized application with correct redirect urls for google sign in
+  - Passport strategies for local/google sign in 
+  - Milestone 3 schema design and writeup 
 
 ### Yaocao Chen
 
