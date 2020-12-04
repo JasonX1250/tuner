@@ -450,10 +450,10 @@ router.get('/login/google/return', passport.authenticate('google', {
     }),
     //otherwise redirects back home since found the right user
     (req, res) => {
-        console.log(req.user + "user");
-        const accessToken = req.user.google.token;
-        console.log(accessToken + "accessToken");
-        res.redirect("/");
+        // window.localStorage.setItem("userId", req.user._id);
+        // window.location.href = `${url}`;
+        console.log(req.user._id + "user");
+        res.redirect('/');
     });
 
 module.exports = router;
