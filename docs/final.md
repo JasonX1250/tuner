@@ -325,6 +325,15 @@ With proper authentication/authorization, users should now be able to see the **
 
 - Backend
   - Authorized application for usage of Spotify's Web API
+- Frontend
+   -Implemented user interface views
+    - Login
+    - Register
+- Documentation
+  - setup
+  - milestone 1
+   
+ 
 
 ## **Conclusion**
 
