@@ -9,7 +9,6 @@ const passport = require('passport');
 require("../config/passport.js")(passport);
 const router = require("../server/routes");
 
-app.use(passport.initialize());
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname, "../client")));
