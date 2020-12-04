@@ -22,6 +22,7 @@ app.use("/addToPlaylistsResults", express.static(path.join(__dirname, "../client
 app.use("/login", express.static(path.join(__dirname, "../client/Login")));
 app.use("/savedPlaylists", express.static(path.join(__dirname, "../client/SavedPlaylists")));
 app.use("/browsePlaylist", express.static(path.join(__dirname, "../client/BrowsePlaylist")));
+app.use("/register", express.static(path.join(__dirname, "../client/Register")));
 
 app.use(router);
 

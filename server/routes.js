@@ -405,7 +405,7 @@ router.delete("/deleteSavedPlaylist", async (req, res) => {
     });
 });
 
-router.post("/login", async (req, res) => {
+router.post("/loginUser", async (req, res) => {
     const users = await loadDatabase("UserDB", "users", {
         username: req.body.username
     });
@@ -420,7 +420,7 @@ router.post("/login", async (req, res) => {
     }
 });
 
-router.post("/register", async (req, res) => {
+router.post("/registerUser", async (req, res) => {
     const users = await loadDatabase("UserDB", "users", {
         username: req.body.username
     });
