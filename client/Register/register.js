@@ -27,7 +27,8 @@ async function register() {
     if (response.ok) {
         const data = await response.json();
         if (data.success) {
-            window.location.href = `${url}`;
+            window.alert("Your account has successfully been created.");
+            window.location.href = `${url}/login`;
         } else {
             window.alert("User already exists.");
         }
