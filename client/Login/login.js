@@ -4,10 +4,13 @@ window.onload = async () => {
 
     // add event listener to 'Search' button
     document.getElementById("login-btn").addEventListener("click", login);
+    document.getElementById("register-btn").addEventListener("click", () => {
+        window.location.href = `${url}/register`;
+    });
 }
 
 async function login() {
-    const response = await fetch(`${url}/login`, {
+    const response = await fetch(`${url}/loginUser`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json;charset=utf-8"
