@@ -305,6 +305,7 @@ With proper authentication/authorization, users should now be able to see the **
   - milestone 3
   - setup
   - final
+  - rubric
 
 ### Alex Lapin
 
@@ -326,6 +327,7 @@ With proper authentication/authorization, users should now be able to see the **
   - Restructured src code for server routing for clarity (routes.js and index.js)
   - Documentation
     - Milestone 3 schema design and writeup
+    - rubric
 
 ### Yaocao Chen
 
@@ -344,5 +346,7 @@ With proper authentication/authorization, users should now be able to see the **
 Throughout the project, we were able to learn more about the process of building a new application from the ground up, including techniques for implementing the UI for the frontend, the API endpoints and routing for the backend, setting up the database and data models, configuring authorization/authentication, and deploying it to production on Heroku. We were able to gain a better understanding of the amount of work required for implementing all of the systems and features that make an application such as *Tuner* fully functioning and operational.
 
 However, the journey was not without difficulties and obstacles as many problems arose when we first started working with external API's including YouTube's Data API and Spotify's Web API. One of the large hurdles we had to overcome at first involved getting authentication/authorization access for the *Tuner* application on both of the API's. We also ran into further trouble with issues getting user login functioning for both their YouTube and Spotify accounts and verifying the permissions and scopes that the *Tuner* application had over these accounts. As a result, a more simpler approach was taken without the use of login for either YouTube or Spotify. Other technical difficulties included working with a limited quota for YouTube's Data API, which prevents excessive calls to their API's endpoints. This reduced the progress of testing some of the backend endpoints as there was a cap to the number of calls we could make to their API per day.
+
+In terms of future development, we would like to include some of the initial ideas we had for the project that were not able to be properly implemented. These granting users with the ability to access their accounts on a specified platform, say logging into their YouTube or Spotify account. This would then allow users to also create, modify, or delete any playlists that they saved on those platforms, not just on the Tuner application. We would also like to include additional platforms in the future to give more flexibility and versitility for users that would like to find media on platforms other than YouTube and Spotify.
 
 Overall, the team was able to gain a lot of experience working together to build a real-world, innovative application that could be widely used one day. We were able to apply the knowledge we learned from class (*CS 326: Web Programming*) and  improve our own skills as developers while building a working application. This was a fun project to work on and we hope you enjoy the functionality of the *Tuner* application!
